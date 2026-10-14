@@ -1,0 +1,2713 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MASTER PROMPT BUILDER PRO v3.0 — by Mira Projek</title>
+
+  <style>
+    :root {
+      --bg-base: #070b14;
+      --bg-surface: #0f172a;
+      --bg-elevated: #1e293b;
+      --bg-glass: rgba(15, 23, 42, 0.82);
+      --bg-input: #090e1a;
+      --border-subtle: rgba(148, 163, 184, 0.16);
+      --border-highlight: rgba(16, 185, 129, 0.45);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --accent-emerald: #10b981;
+      --accent-emerald-glow: rgba(16, 185, 129, 0.25);
+      --accent-cyan: #06b6d4;
+      --accent-cyan-glow: rgba(6, 182, 212, 0.25);
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-indigo: #6366f1;
+      --gradient-brand: linear-gradient(135deg, #10b981 0%, #06b6d4 55%, #3b82f6 100%);
+      --gradient-card: linear-gradient(180deg, rgba(30, 41, 59, 0.65) 0%, rgba(15, 23, 42, 0.9) 100%);
+      --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-arabic: 'Amiri', 'Traditional Arabic', serif;
+    }
+
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f8fafc;
+      --bg-glass: rgba(255, 255, 255, 0.9);
+      --bg-input: #f8fafc;
+      --border-subtle: rgba(15, 23, 42, 0.12);
+      --border-highlight: rgba(5, 150, 105, 0.5);
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --accent-emerald: #059669;
+      --accent-emerald-glow: rgba(5, 150, 105, 0.15);
+      --accent-cyan: #0284c7;
+      --accent-cyan-glow: rgba(2, 132, 199, 0.15);
+      --gradient-card: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(circle at 12% 8%, var(--accent-emerald-glow), transparent 32%),
+        radial-gradient(circle at 88% 12%, var(--accent-cyan-glow), transparent 32%);
+      color: var(--text-primary);
+      line-height: 1.55;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Header Navigation */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 24px;
+    }
+
+    .header-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--gradient-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 22px;
+      color: #ffffff;
+      box-shadow: 0 0 20px var(--accent-emerald-glow);
+      flex-shrink: 0;
+    }
+
+    .brand-titles h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge-pro {
+      background: var(--gradient-brand);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-input);
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+
+    .nav-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-tab:hover {
+      color: var(--text-primary);
+      background: rgba(148, 163, 184, 0.1);
+    }
+
+    .nav-tab.active {
+      background: var(--gradient-brand);
+      color: #ffffff;
+      box-shadow: 0 4px 12px var(--accent-emerald-glow);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 5px 11px;
+      border-radius: 999px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .icon-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 7px 12px;
+      border-radius: 9px;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-1px);
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 20px 24px 48px;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Preset Strip */
+    .preset-strip {
+      background: var(--gradient-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .preset-strip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .preset-strip-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preset-chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    .preset-chip {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preset-chip:hover, .preset-chip.active {
+      border-color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.14);
+      color: var(--text-primary);
+    }
+
+    /* Workspace Grid */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    @media (max-width: 1140px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards & Sections */
+    .panel-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 18px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .step-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: var(--gradient-brand);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Form Controls */
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 680px) {
+      .form-grid-2, .form-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-group {
+      margin-bottom: 13px;
+    }
+
+    .field-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .field-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      padding: 10px 12px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px var(--accent-cyan-glow);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 115px;
+      line-height: 1.55;
+    }
+
+    /* Dynamic Content Blocks Builder */
+    .blocks-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .content-block-item {
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      position: relative;
+    }
+
+    html[data-theme="light"] .content-block-item {
+      background: #f8fafc;
+    }
+
+    .block-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-emerald);
+    }
+
+    .btn-remove-block {
+      background: rgba(244, 63, 94, 0.14);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Reference Upload Zone */
+    .upload-dropzone {
+      border: 1.5px dashed var(--border-highlight);
+      background: rgba(16, 185, 129, 0.05);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .upload-dropzone:hover {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--accent-emerald);
+    }
+
+    .ref-preview-box {
+      display: none;
+      margin-top: 12px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .ref-preview-box.active {
+      display: flex;
+    }
+
+    .ref-thumb {
+      width: 78px;
+      height: 78px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+
+    .extracted-swatches {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .swatch-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* Primary CTA Button */
+    .btn-generate-master {
+      width: 100%;
+      background: var(--gradient-brand);
+      border: none;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 800;
+      padding: 15px 22px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px -4px var(--accent-emerald-glow);
+      transition: all 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-generate-master:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px -4px var(--accent-emerald-glow);
+    }
+
+    .btn-secondary-action {
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      color: var(--accent-cyan);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary-action:hover {
+      background: rgba(6, 182, 212, 0.22);
+    }
+
+    /* Right Pane: Live Wireframe & Terminal Output */
+    .wireframe-bar {
+      display: grid;
+      grid-template-columns: 135px 1fr;
+      gap: 16px;
+      align-items: center;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .wireframe-canvas-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 155px;
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      padding: 8px;
+    }
+
+    .wireframe-box {
+      border: 2px solid var(--accent-cyan);
+      border-radius: 6px;
+      background: rgba(6, 182, 212, 0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wf-zone {
+      border-radius: 3px;
+      font-size: 8px;
+      font-weight: 700;
+      text-align: center;
+      padding: 2px;
+      color: #fff;
+      letter-spacing: 0.03em;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .metric-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .metric-pill .m-label {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .metric-pill .m-val {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-top: 2px;
+    }
+
+    /* Terminal Output Window */
+    .terminal-window {
+      background: #050811;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.65);
+    }
+
+    .terminal-topbar {
+      background: #0f172a;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .terminal-dots {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .t-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .t-dot.red { background: #ef4444; }
+    .t-dot.yellow { background: #f59e0b; }
+    .t-dot.green { background: #10b981; }
+
+    .terminal-filename {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: #38bdf8;
+      margin-left: 6px;
+    }
+
+    .terminal-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-copy-terminal {
+      background: var(--gradient-brand);
+      color: #ffffff;
+      border: none;
+      padding: 6px 13px;
+      border-radius: 7px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+
+    .btn-copy-terminal:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .slide-tabs-bar {
+      display: none;
+      background: #0b1120;
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      gap: 6px;
+      overflow-x: auto;
+      flex-wrap: wrap;
+    }
+
+    .slide-tabs-bar.active {
+      display: flex;
+    }
+
+    .slide-tab-btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #cbd5e1;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .slide-tab-btn.active {
+      background: var(--accent-emerald);
+      color: #fff;
+      border-color: var(--accent-emerald);
+      font-weight: 700;
+    }
+
+    .terminal-body {
+      padding: 16px;
+      max-height: 620px;
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Catalog Explorer Grid */
+    .catalog-filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .catalog-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .catalog-card:hover {
+      border-color: var(--accent-emerald);
+      transform: translateY(-2px);
+    }
+
+    .catalog-code-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .catalog-cat-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(6, 182, 212, 0.14);
+      color: var(--accent-cyan);
+    }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid var(--accent-emerald);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+    }
+
+    .toast-notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .palette-preview-strip {
+      display: flex;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 6px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .palette-preview-strip div {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-group">
+        <div class="brand-logo">P</div>
+        <div class="brand-titles">
+          <h1>
+            MASTER PROMPT BUILDER
+            <span class="badge-pro">PRO v3.0</span>
+          </h1>
+          <div class="brand-subtitle">by Mira Projek • Arsitek Prompt Infografis & Poster Kepadatan Tinggi (NanoBanana Pro / DALL-E 3 / Flux.1 / MJ v6.1)</div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" aria-label="Menu Utama">
+        <button class="nav-tab active" onclick="switchTab('builder', this)">🛠️ Studio Prompt Builder</button>
+        <button class="nav-tab" onclick="switchTab('catalog', this)">📚 Katalog 25 Layout & 50 Style</button>
+        <button class="nav-tab" onclick="switchTab('history', this)">🗂️ Riwayat & Preset (<span id="historyCountBadge">0</span>)</button>
+        <button class="nav-tab" onclick="switchTab('guide', this)">📖 Panduan & Blueprint Gem</button>
+      </nav>
+
+      <div class="header-actions">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>ENGINE READY • 8K ULTRA HD</span>
+        </div>
+        <button class="icon-btn" onclick="toggleTheme()" id="themeToggleBtn" title="Ganti Tema">☀️ Light Mode</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-container">
+
+    <!-- ==========================================
+         TAB 1: STUDIO PROMPT BUILDER
+         ========================================== -->
+    <section id="tab-builder" class="tab-panel active">
+
+      <!-- QUICK PRESET STRIP (9 STUDI KASUS MIRA PROJEK) -->
+      <div class="preset-strip">
+        <div class="preset-strip-header">
+          <div class="preset-strip-title">⚡ 9 Preset Studi Kasus Cepat (Klik untuk Auto-Fill & Uji Instan)</div>
+          <button class="btn-secondary-action" onclick="resetFormToBlank()">🔄 Reset Form Kosong</button>
+        </div>
+        <div class="preset-chips" id="presetChipsContainer"></div>
+      </div>
+
+      <div class="workspace-grid">
+
+        <!-- LEFT PANE: INPUT & CONFIGURATION -->
+        <div class="left-config-pane">
+
+          <!-- STEP 1: TOPIK & DATA UTAMA -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span class="step-badge">1</span>
+                <span>Topik, Materi, atau Data Infografis</span>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn-secondary-action" onclick="autoParseRawText()" title="Ekstrak otomatis teks mentah menjadi blok-blok terstruktur">🧠 Bedah & Perkaya Otomatis</button>
+                <button class="btn-secondary-action" onclick="autoMatchVisuals()" title="Pilihkan Layout, Style, dan Palet terbaik sesuai topik">✨ Auto-Match Visual</button>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Ide Pokok / Teks Materi / Data Mentah Produk</span>
+                <span class="field-hint">Bisa singkat (1 kalimat) atau spesifikasi panjang</span>
+              </label>
+              <textarea id="rawTopicInput" placeholder="Masukkan topik singkat (contoh: 'Tips puasa sehat untuk penderita maag') atau tempelkan deskripsi produk/materi lengkap Anda di sini..."></textarea>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="field-group">
+                <label class="field-label"><span>Judul Utama (Headline)</span></label>
+                <input type="text" id="headlineInput" placeholder="Otomatis dari topik / isi manual..." />
+              </div>
+              <div class="field-group">
+                <label class="field-label"><span>Subjudul Kontekstual</span></label>
+                <input type="text" id="subheadlineInput" placeholder="Penjelasan pendukung judul..." />
+              </div>
+              <div class="field-group">
+                <label class="field-label"><span>Badge Utama / Harga / Promo</span></label>
+                <input type="text" id="badgeInput" placeholder="Contoh: DISKON 25% / Rp 109.900 / 650 KM" />
+              </div>
+            </div>
+
+            <!-- DYNAMIC CONTENT BLOCKS -->
+            <div style="margin-top: 6px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                <label class="field-label" style="margin-bottom:0;">
+                  <span>Rincian Poin / Blok Konten & Visual Cue (Hukum Nama + Deskripsi)</span>
+                </label>
+                <button class="btn-secondary-action" onclick="addContentBlock()">+ Tambah Blok Poin</button>
+              </div>
+              <div id="contentBlocksContainer" class="blocks-container"></div>
+            </div>
+
+            <div class="form-grid-2" style="margin-top: 12px;">
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Baris Keunggulan / Fakta Pendukung (Footer Row)</span></label>
+                <input type="text" id="footerRowInput" placeholder="Contoh: 100% Halal | Tanpa Pengawet | Gratis Saus Spesial" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Call to Action (CTA) / Penutup Footer</span></label>
+                <input type="text" id="ctaInput" placeholder="Contoh: Booking Sekarang! Klik Link di Bio / Hubungi WA Admin" />
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: INTEGRASI REFERENSI GAMBAR (ANTI-HALU ENGINE) -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span class="step-badge">2</span>
+                <span>Referensi Gambar — Teknologi Visual Anti-Halu (Opsional)</span>
+              </div>
+              <span class="field-hint">Ekstraksi Warna & Pengunci Bentuk Produk</span>
+            </div>
+
+            <div class="upload-dropzone" onclick="document.getElementById('refImageFile').click()">
+              <input type="file" id="refImageFile" accept="image/*" style="display:none" onchange="handleReferenceImageUpload(event)" />
+              <div style="font-size: 13.5px; font-weight: 700; color: var(--accent-emerald);">📸 Klik untuk Unggah Foto Produk / Referensi Gaya Visual</div>
+              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px;">Mendeteksi rasio gambar & mengekstrak 4 kode warna HEX dominan secara otomatis di browser Anda</div>
+            </div>
+
+            <div id="refPreviewBox" class="ref-preview-box">
+              <img id="refThumbImg" class="ref-thumb" src="" alt="Preview Referensi" />
+              <div style="flex:1;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <strong id="refFileName" style="font-size:12.5px;">produk_referensi.jpg</strong>
+                  <button class="btn-remove-block" onclick="clearReferenceImage()">Hapus Gambar</button>
+                </div>
+                <div id="refImageMeta" style="font-size:11px; color:var(--text-muted); margin-top:2px;"></div>
+                <div class="extracted-swatches" id="extractedSwatchesContainer"></div>
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="margin-top: 12px;">
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Mode Penguncian Referensi (Reference Lock)</span></label>
+                <select id="refLockModeSelect" onchange="generateMasterPrompt()">
+                  <option value="none">Tanpa Gambar Referensi (Autonomous Generation)</option>
+                  <option value="product_lock">🔒 Kunci Bentuk & Kemasan Produk 100% (Anti-Halu Product Lock)</option>
+                  <option value="style_lock">🎨 Ikuti Gaya Visual, Pencahayaan & Mood Referensi</option>
+                  <option value="layout_lock">📐 Ikuti Komposisi Tata Letak & Palet Warna Referensi</option>
+                </select>
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Detail Objek Referensi yang Wajib Dipertahankan</span></label>
+                <input type="text" id="refDetailInput" placeholder="Contoh: Box isi 9 donut mochi dengan stiker hijau di kiri..." oninput="generateMasterPrompt()" />
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3: SPESIFIKASI STRATEGI, ENGINE & FORMAT OUTPUT -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span class="step-badge">3</span>
+                <span>Spesifikasi Mode Tujuan, AI Engine & Format Output</span>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="field-group">
+                <label class="field-label"><span>Mode Tujuan & Pilar Strategi</span></label>
+                <select id="purposeModeSelect" onchange="generateMasterPrompt()">
+                  <option value="auto">🤖 Otomatis (Deteksi Cerdas Berdasarkan Topik)</option>
+                  <option value="promo_anatomy">🔥 Promosi: Benefit Breakdown (Central Hero Call-Outs)</option>
+                  <option value="promo_pricing">💰 Promosi: Pricing Tier & Bulk Package Matrix</option>
+                  <option value="promo_exploded">⚡ Promosi: Tech / Spec Exploded Showcase</option>
+                  <option value="promo_travel">✈️ Promosi: Travel, Kuliner & Property Exclusive Offer</option>
+                  <option value="promo_versus">⚔️ Promosi: Apple-to-Apple Comparison (Versus)</option>
+                  <option value="promo_pas">🎯 Promosi: PAS (Problem - Agitate - Solution)</option>
+                  <option value="edu_general">📘 Edukasi, Sains & Panduan Langkah Praktis</option>
+                  <option value="edu_region">🗺️ Edukasi: Profil Wilayah / Kota (5-Layer Scenic Diorama)</option>
+                  <option value="edu_islamic">🕌 Pendidikan Islam, Pesantren & Kaidah Bahasa Arab</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label"><span>Optimalisasi Mesin AI (Target AI Engine)</span></label>
+                <select id="targetEngineSelect" onchange="generateMasterPrompt()">
+                  <option value="universal">🚀 Universal Pro (Nano Banana Pro + DALL-E 3 + Flux.1 Ready)</option>
+                  <option value="nanobanana">🍌 Nano Banana Pro / Gemini ("Thinking" High-Precision Text)</option>
+                  <option value="dalle3">💬 ChatGPT Plus (DALL-E 3 Conversational Studio)</option>
+                  <option value="flux">⚡ Flux.1 Pro / Dev (Photorealistic Typography)</option>
+                  <option value="midjourney">⛵ Midjourney v6.1 (Dengan Parameter --ar --v 6.1 --style raw)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Format Output Desain</span></label>
+                <select id="outputFormatSelect" onchange="handleOutputFormatChange()">
+                  <option value="single">🖼️ Single Image (Infografis / Poster Utuh)</option>
+                  <option value="carousel_slides">📑 Carousel Multi-Slide (Prompt Terpisah per Slide)</option>
+                  <option value="carousel_grid">🔲 Carousel 1-Page Grid (One-Shot Composite Sheet)</option>
+                </select>
+              </div>
+
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Aspect Ratio Platform</span></label>
+                <select id="aspectRatioSelect" onchange="generateMasterPrompt()">
+                  <option value="4:5">4:5 — Vertical Social Media (Instagram/Feed Default)</option>
+                  <option value="9:16">9:16 — Vertical Story / Reels / TikTok</option>
+                  <option value="1:1">1:1 — Square Catalog / Carousel</option>
+                  <option value="16:9">16:9 — Widescreen Presentation / YouTube</option>
+                  <option value="2:3">2:3 — Poster Cetak / A4 Editorial</option>
+                  <option value="3:4">3:4 — Portrait Classic Poster</option>
+                </select>
+              </div>
+
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Format Sintaks Prompt</span></label>
+                <select id="syntaxModeSelect" onchange="generateMasterPrompt()">
+                  <option value="markdown">📝 Clean Markdown (Default)</option>
+                  <option value="json">🔧 JSON Reusable Schema</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4: ARSITEKTUR VISUAL (25 LAYOUT + 50 STYLE + PALETTE + TYPO + CAMERA) -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span class="step-badge">4</span>
+                <span>Kustomisasi Visual (25 Layout + 50 Art Style + Palet HEX + Tipografi)</span>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="field-group">
+                <label class="field-label">
+                  <span>Library Layout & Diagram (25 Opsi)</span>
+                  <span class="field-hint" id="layoutCodeHint">L01</span>
+                </label>
+                <select id="layoutSelect" onchange="generateMasterPrompt()"></select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label">
+                  <span>Filter Kategori Art Style</span>
+                </label>
+                <select id="styleCategoryFilter" onchange="populateArtStyleSelect()">
+                  <option value="ALL">🌟 Semua Kategori (50 Art Style Premium)</option>
+                  <option value="CAT1">Kategori 1: Modern, Clean, Corporate & Studio (10)</option>
+                  <option value="CAT2">Kategori 2: Textured Craft, Tactile & Luxury (10)</option>
+                  <option value="CAT3">Kategori 3: Retro, Klasik, Budaya & Nusantara (13)</option>
+                  <option value="CAT4">Kategori 4: Teknis, Sci-Fi, Gaming & Hologram (14)</option>
+                  <option value="CAT5">Kategori 5: Edukasi, Akademik & Islamic Pedagogy (3)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="field-group">
+                <label class="field-label">
+                  <span>Style Visual Utama (50 Art Style)</span>
+                  <span class="field-hint" id="styleCodeHint">S06</span>
+                </label>
+                <select id="artStyleSelect" onchange="generateMasterPrompt()"></select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label"><span>Custom Style / Mashup Tambahan (Opsional)</span></label>
+                <input type="text" id="customStyleInput" placeholder="Kosongkan atau ketik misal: 'Sentuhan Batik Emas Cyberpunk'..." oninput="generateMasterPrompt()" />
+              </div>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Skema Palet Warna (HEX)</span></label>
+                <select id="paletteSelect" onchange="generateMasterPrompt()"></select>
+                <div id="paletteStripPreview" class="palette-preview-strip"></div>
+              </div>
+
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Mood Tipografi</span></label>
+                <select id="typographySelect" onchange="generateMasterPrompt()"></select>
+              </div>
+
+              <div class="field-group" style="margin-bottom:0;">
+                <label class="field-label"><span>Kamera & Komposisi</span></label>
+                <select id="cameraSelect" onchange="generateMasterPrompt()"></select>
+              </div>
+            </div>
+
+            <div style="margin-top: 18px;">
+              <button class="btn-generate-master" onclick="generateMasterPrompt(true)">
+                <span>✨ GENERATE & OPTIMALKAN MASTER PROMPT SEKARANG</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT PANE: LIVE WIREFRAME + TERMINAL OUTPUT -->
+        <div class="right-output-pane">
+
+          <!-- LIVE WIREFRAME & DENSITY METRICS -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span>📐 Live Spatial Wireframe & Kualitas Arsitektur Prompt</span>
+              </div>
+              <span class="status-pill" id="densityScoreBadge">Skor Kepadatan: 98% (Optimal)</span>
+            </div>
+
+            <div class="wireframe-bar">
+              <div class="wireframe-canvas-wrap">
+                <div id="wireframeBox" class="wireframe-box" style="width: 100px; height: 125px;">
+                  <div class="wf-zone" id="wfHeaderZone" style="background:#10b981; height:20%;">HEADER 18%</div>
+                  <div class="wf-zone" id="wfBodyZone" style="background:#0284c7; height:60%; display:flex; align-items:center; justify-content:center;">HERO + 4 BLOK</div>
+                  <div class="wf-zone" id="wfFooterZone" style="background:#d97706; height:18%;">CTA FOOTER</div>
+                </div>
+              </div>
+
+              <div class="metrics-grid">
+                <div class="metric-pill">
+                  <div class="m-label">Layout Spasial Aktif</div>
+                  <div class="m-val" id="metricLayoutVal">L05 • Central Hero</div>
+                </div>
+                <div class="metric-pill">
+                  <div class="m-label">Art Style & Dimensi</div>
+                  <div class="m-val" id="metricStyleVal">S06 • Realism Collage</div>
+                </div>
+                <div class="metric-pill">
+                  <div class="m-label">Proteksi Anti-Bocor Label</div>
+                  <div class="m-val" id="metricForbiddenVal" style="color:var(--accent-emerald);">16 Label + HEX Diblokir</div>
+                </div>
+                <div class="metric-pill">
+                  <div class="m-label">Aturan Keterbacaan Teks</div>
+                  <div class="m-val" style="color:var(--accent-cyan);">2D Frontal UI (0° Tilt)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TERMINAL WINDOW -->
+            <div class="terminal-window">
+              <div class="terminal-topbar">
+                <div class="terminal-dots">
+                  <span class="t-dot red"></span>
+                  <span class="t-dot yellow"></span>
+                  <span class="t-dot green"></span>
+                  <span class="terminal-filename" id="terminalFilenameLabel">output_terminal.md</span>
+                </div>
+                <div class="terminal-actions">
+                  <button class="btn-secondary-action" onclick="saveCurrentToHistory()">💾 Simpan Riwayat</button>
+                  <button class="btn-secondary-action" onclick="downloadPromptFile()">⬇️ Unduh File</button>
+                  <button class="btn-copy-terminal" onclick="copyTerminalOutput()">📋 Copy Master Prompt</button>
+                </div>
+              </div>
+
+              <!-- Slide Switcher for Carousel Separate Slides -->
+              <div id="carouselSlideTabsBar" class="slide-tabs-bar"></div>
+
+              <pre id="terminalOutputPre" class="terminal-body"></pre>
+            </div>
+
+            <!-- QUICK EXECUTION GUIDE FOR CHATGPT PLUS / NANO BANANA PRO -->
+            <div style="margin-top: 14px; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+                <strong style="font-size:12.5px; color:var(--accent-emerald);">💡 Instruksi Pengantar Saat Upload Foto Produk di ChatGPT Plus / Gemini:</strong>
+                <button class="btn-secondary-action" onclick="copyCompanionCommand()">📋 Salin Perintah Pengantar</button>
+              </div>
+              <div id="companionCommandText" style="font-family:var(--font-mono); font-size:11.5px; color:var(--text-secondary);">"Gunakan Master Prompt di bawah ini untuk membuat infografis/poster resolusi tinggi dengan mempertahankan 100% bentuk asli kemasan, logo, dan warna produk dari foto referensi yang saya unggah, serta pastikan seluruh teks tertulis tajam, frontal 2D, dan bebas typo:"</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 2: KATALOG 25 LAYOUT & 50 ART STYLE
+         ========================================== -->
+    <section id="tab-catalog" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📚 Eksplorasi Database 25 Layout Spasial & 50 Art Style Premium</span>
+          </div>
+          <span class="field-hint">Klik "Gunakan di Studio" pada kartu mana pun untuk langsung menerapkannya</span>
+        </div>
+
+        <div class="catalog-filter-bar">
+          <input type="text" id="catalogSearchInput" placeholder="🔍 Cari nama layout, style, kata kunci teknis, atau penggunaan (misal: Exploded, Batik, Kuliner, Nahwu)..." style="max-width: 460px;" oninput="renderCatalogCards()" />
+          <select id="catalogTypeFilter" style="max-width: 280px;" onchange="renderCatalogCards()">
+            <option value="ALL">Tampilkan Semua (25 Layout + 50 Style)</option>
+            <option value="LAYOUT">📐 Hanya 25 Library Layout (L01–L25)</option>
+            <option value="CAT1">🎨 Style Kat 1: Modern, Clean & Studio</option>
+            <option value="CAT2">🧶 Style Kat 2: Textured Craft & Luxury</option>
+            <option value="CAT3">🎭 Style Kat 3: Retro, Klasik & Budaya Nusantara</option>
+            <option value="CAT4">⚡ Style Kat 4: Teknis, Sci-Fi & Hologram</option>
+            <option value="CAT5">🕌 Style Kat 5: Edukasi, Akademik & Pesantren</option>
+          </select>
+        </div>
+
+        <div id="catalogGridContainer" class="catalog-grid"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 3: RIWAYAT PROMPT & PRESET (LOCALSTORAGE)
+         ========================================== -->
+    <section id="tab-history" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🗂️ Riwayat Master Prompt & Preset Tersimpan</span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-secondary-action" onclick="exportHistoryJson()">⬇️ Ekspor Backup JSON</button>
+            <button class="btn-remove-block" onclick="clearAllHistory()">🗑️ Bersihkan Semua</button>
+          </div>
+        </div>
+        <div id="historyListContainer" class="catalog-grid"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 4: PANDUAN & SYSTEM BLUEPRINT v3.0
+         ========================================== -->
+    <section id="tab-guide" class="tab-panel">
+      <div class="form-grid-2">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title">📖 Alur Kerja 4 Langkah Master Prompt Builder PRO v3.0</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:13.5px; color:var(--text-secondary);">
+            <div><strong style="color:var(--accent-emerald);">1. Masukkan Topik atau Pilih 9 Preset Studi Kasus:</strong> Ketik ide singkat atau tempelkan teks spesifikasi produk panjang, lalu klik tombol <em>"🧠 Bedah & Perkaya Otomatis"</em> agar sistem memecahnya menjadi blok informasi padat (Nama + Deskripsi + Ikon 3D Spesifik).</div>
+            <div><strong style="color:var(--accent-emerald);">2. Unggah Referensi Gambar (Opsional — Anti-Halu):</strong> Unggah foto produk asli Anda untuk mengekstrak 4 kode warna HEX dominan secara otomatis dan mengaktifkan <em>STRICT SUBJECT IDENTITY LOCK</em> agar AI tidak mengubah bentuk kemasan produk.</div>
+            <div><strong style="color:var(--accent-emerald);">3. Pilih Mode Strategi, Layout & Art Style:</strong> Gunakan tombol <em>"✨ Auto-Match Visual"</em> atau pilih bebas dari 25 Layout Spasial (termasuk <em>Exploded View</em> & <em>5-Layer Scenic Diorama</em>) dan 50 Art Style Premium.</div>
+            <div><strong style="color:var(--accent-emerald);">4. Salin & Eksekusi di AI Engine:</strong> Klik <em>"📋 Copy Master Prompt"</em> pada panel terminal kanan, lalu tempelkan ke <strong>ChatGPT Plus (DALL-E 3)</strong>, <strong>Nano Banana Pro (Gemini)</strong>, <strong>Flux.1</strong>, atau <strong>Midjourney v6.1</strong>.</div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title">🛡️ 4 Keunggulan Arsitektur v3.0 (by Mira Projek)</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:13.5px; color:var(--text-secondary);">
+            <div><strong style="color:var(--accent-cyan);">• Hukum 3D World + 2D Frontal UI Overlay:</strong> Objek utama dirender dalam kedalaman 3D/realistis penuh, sedangkan semua kartu teks dan label dikunci pada bidang datar 2D frontal (0° tilt) agar 100% mudah dibaca dan bebas distorsi miring.</div>
+            <div><strong style="color:var(--accent-cyan);">• Dynamic Forbidden Words Shield:</strong> Secara otomatis mendeteksi dan memblokir seluruh label instruksi internal (<code>SECTION 1</code>, <code>BLOCK 1</code>, <code>VISUAL CUE</code>) dan kode HEX agar tidak bocor menjadi tulisan di dalam gambar.</div>
+            <div><strong style="color:var(--accent-cyan);">• Dukungan Penuh Mode Carousel & JSON Reusable:</strong> Menghasilkan prompt terpisah per slide dengan pengunci konsistensi gaya (<em>Style Locking</em>) maupun skema JSON murni siap pakai.</div>
+            <div><strong style="color:var(--accent-cyan);">• Spesialis UMKM, Korporat & Pendidikan/Pesantren:</strong> Dilengkapi dukungan tipografi bilingual Arab-Indonesia berharakat (<em>Khat Naskhi/Thuluth</em>) untuk infografis Nahwu, Shorof, Fiqih, dan media pembelajaran.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="toast-notification">
+    <span>✅</span>
+    <span id="toastMessageText">Master Prompt berhasil disalin ke Clipboard!</span>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. DATABASE LENGKAP: 25 LAYOUT + 50 ART STYLE + 15 PALETTE + 12 TYPO + 9 CAMERA
+    // =========================================================================
+    const LAYOUT_LIBRARY = [
+      { code: "L01", name: "Vertical Stacked (Listicle)", desc: "Susunan blok kartu horizontal bertumpuk rapi dari atas ke bawah.", bestFor: "Tips, langkah berurutan, panduan kesehatan", wfType: "stacked" },
+      { code: "L02", name: "Timeline (Chronological Path)", desc: "Garis waktu vertikal/meliuk dengan titik pemberhentian kronologis.", bestFor: "Sejarah, jadwal acara, silsilah, tahapan perkembangan", wfType: "timeline" },
+      { code: "L03", name: "Comparison (Split Screen / Versus)", desc: "Kanvas terbelah dua secara simetris (Kiri vs Kanan) dengan kontras visual tegas.", bestFor: "Battle produk, Before vs After, Robusta vs Arabika", wfType: "split" },
+      { code: "L04", name: "Grid System (Matrix 2x2 / 3x3)", desc: "Kotak-kotak kartu modular berukuran seragam dan simetris.", bestFor: "Katalog fitur, paket harga Bulk Order, perbandingan spesifikasi", wfType: "grid" },
+      { code: "L05", name: "Anatomy (Central Hero Call-Outs)", desc: "Satu objek utama dominan di tengah dengan garis penunjuk (call-outs) ke sekelilingnya.", bestFor: "Bedah keunggulan produk, kuliner unggulan, anatomi", wfType: "hero" },
+      { code: "L06", name: "Cross-Section (Potongan Melintang)", desc: "Objek padat atau bangunan dibelah vertikal/horizontal memperlihatkan isi lapisan dalamnya.", bestFor: "Sains, geologi, lapisan bahan produk/makanan", wfType: "split" },
+      { code: "L07", name: "Exploded View (Bongkar Pasang Presisi)", desc: "Komponen produk melayang terpisah secara presisi mengikuti poros perakitan (axis) di sekitar sasis utama.", bestFor: "Otomotif (BYD Seal), laptop gaming (ASUS ROG), mesin", wfType: "hero" },
+      { code: "L08", name: "X-Ray Reveal / Laser Scan", desc: "Tampilan luar objek yang dipindai sinar transparan memperlihatkan struktur mesin/kerangka di dalamnya.", bestFor: "Teknologi tinggi, medis, sasis kendaraan, keamanan", wfType: "hero" },
+      { code: "L09", name: "Flowchart (Process Loop)", desc: "Alur langkah sistematis yang dihubungkan oleh panah penunjuk arah dari awal hingga selesai.", bestFor: "SOP, cara penyajian makanan, siklus ilmiah, alur order", wfType: "timeline" },
+      { code: "L10", name: "Pyramid (Hierarchy Tiers)", desc: "Segitiga bertingkat dari level fondasi dasar hingga puncak tertinggi.", bestFor: "Hierarki kebutuhan, tingkatan ilmu, piramida nutrisi", wfType: "stacked" },
+      { code: "L11", name: "Radial / Tree Mind Map (Peta Konsep)", desc: "Inti konsep di pusat/atas kanvas dengan cabang kategori menyebar terstruktur.", bestFor: "Peta konsep pendidikan, pembagian kaidah Nahwu/Shorof/Fiqih", wfType: "grid" },
+      { code: "L12", name: "Geographic (Map-Based Spatial)", desc: "Peta wilayah/negara 3D sebagai dasar visual dengan pin lokasi dan kartu destinasi.", bestFor: "Paket wisata travel (Explore Singapore), sebaran wilayah", wfType: "hero" },
+      { code: "L13", name: "Isometric City / Cluster Ecosystem", desc: "Lingkungan 3D bersudut 30 derajat tempat setiap zona mewakili fasilitas utama.", bestFor: "Masterplan properti/perumahan (Areum Parc), ekosistem sistem", wfType: "grid" },
+      { code: "L14", name: "Roadmap (S-Curve Winding Path)", desc: "Jalur jalan melengkung menyerupai huruf S dari atas ke bawah dengan pos pencapaian.", bestFor: "Kurikulum belajar, target bisnis, perjalanan sukses", wfType: "timeline" },
+      { code: "L15", name: "Venn Diagram (Intersection)", desc: "Lingkaran transparan yang saling beririsan menonjolkan titik temu utama.", bestFor: "Strategi Ikigai, kecocokan produk, analisis irisan konsep", wfType: "split" },
+      { code: "L16", name: "Triptych (3-Panel Epic Narrative)", desc: "Kanvas dibagi menjadi tiga panel sejajar berdampingan yang membentuk cerita utuh.", bestFor: "Masa Lalu-Kini-Masa Depan, Masalah-Solusi-Hasil, sejarah", wfType: "grid" },
+      { code: "L17", name: "Typographic Composition (Kinetic Poster)", desc: "Teks artistik berukuran masif menjadi pahlawan visual yang menyatu dengan produk.", bestFor: "Promo flash sale, kutipan motivasi, manifesto brand", wfType: "stacked" },
+      { code: "L18", name: "The Iceberg (Visible vs Hidden Depth)", desc: "Bagian kecil terlihat di atas permukaan air vs bagian raksasa tersembunyi di bawah air.", bestFor: "Fakta psikologi, biaya tersembunyi, akar masalah", wfType: "split" },
+      { code: "L19", name: "The Funnel (Conversion Filter)", desc: "Bentuk corong lebar di atas dan mengerucut ke bawah untuk tahapan seleksi.", bestFor: "Strategi marketing, penyaringan data, seleksi", wfType: "stacked" },
+      { code: "L20", name: "The Staircase (Ascending Growth)", desc: "Anak tangga 3D menanjak bertahap menuju puncak kesuksesan.", bestFor: "Jenjang pendidikan, tahapan karier, kurva belajar", wfType: "timeline" },
+      { code: "L21", name: "The Fishbone (Cause & Effect)", desc: "Kerangka tulang ikan dengan kepala sebagai masalah utama dan duri cabang sebagai penyebab.", bestFor: "Analisis sebab-akibat, bedah kasus ilmiah/manajemen", wfType: "timeline" },
+      { code: "L22", name: "The Periodic Table (Dense Matrix Grid)", desc: "Grid rapat warna-warni untuk mengelompokkan banyak elemen mikro secara terklasifikasi.", bestFor: "Kumpulan rumus, kamus mufrodat/kosakata, katalog lengkap", wfType: "grid" },
+      { code: "L23", name: "The Dynamic Z-Trail", desc: "Jalur zig-zag berbentuk huruf Z yang memandu mata melintasi titik fokus utama secara cepat.", bestFor: "Poster iklan konversi tinggi, highlight fitur unggulan", wfType: "timeline" },
+      { code: "L24", name: "Broken Glass / Editorial Collage", desc: "Layout asimetris dengan pecahan bidang artistik bergaya majalah modern.", bestFor: "Fashion, musik, olahraga, kampanye kreatif anak muda", wfType: "grid" },
+      { code: "L25", name: "The Scenic Diorama (5-Layer Z-Axis Stack)", desc: "Tumpukan kedalaman 5 lapis: Sky/Map Header -> Horizon Landmarks -> Midground Architecture -> Cultural Foreground -> Culinary Footer Shelf.", bestFor: "Profil Kota/Provinsi/Negara, ekosistem budaya lengkap", wfType: "diorama" }
+    ];
+
+    const ART_STYLE_LIBRARY = [
+      // KATEGORI 1: MODERN, CLEAN, CORPORATE & STUDIO
+      { code: "S01", cat: "CAT1", catName: "Modern & Studio", name: "Flat Design 2.0 (Modern UI)", keywords: "Clean vector illustration, solid vibrant fills, subtle layered drop shadows, soft rounded UI cards, startup aesthetic" },
+      { code: "S02", cat: "CAT1", catName: "Modern & Studio", name: "Corporate Minimalist", keywords: "High-trust executive layout, generous structured whitespace, crisp grid alignment, annual report precision" },
+      { code: "S03", cat: "CAT1", catName: "Modern & Studio", name: "Glassmorphism (Frosted UI)", keywords: "Translucent frosted-glass cards, backdrop blur, glowing 1px specular borders, floating depth over vibrant abstract gradient" },
+      { code: "S04", cat: "CAT1", catName: "Modern & Studio", name: "Knolling Photography (90° Overhead)", keywords: "Physical objects meticulously disassembled and arranged at strict 90-degree parallel angles on matte surface, overhead studio lighting" },
+      { code: "S05", cat: "CAT1", catName: "Modern & Studio", name: "Isometric 3D Illustration", keywords: "Orthographic 30-degree isometric camera, clean geometric 3D precision, soft global illumination, Blender/Cinema4D render" },
+      { code: "S06", cat: "CAT1", catName: "Modern & Studio", name: "High-Fidelity Realism Collage", keywords: "Mixed media commercial studio photography seamlessly blended with crisp 2D vector graphic callout cards, agency advertising finish" },
+      { code: "S07", cat: "CAT1", catName: "Modern & Studio", name: "Commercial Studio Product Photography", keywords: "Hero product on sculpted podium, dramatic rim lighting, commercial softbox reflections, 85mm macro prime lens sharpness" },
+      { code: "S08", cat: "CAT1", catName: "Modern & Studio", name: "Editorial Magazine Double-Spread", keywords: "High-end National Geographic & Forbes editorial layout, structured multi-column grid, authoritative photojournalistic realism" },
+      { code: "S09", cat: "CAT1", catName: "Modern & Studio", name: "Hyper-Realistic Food Macro Commercial", keywords: "Appetizing steam wisps, glistening sauce droplets, warm golden-hour backlight, crisp crumb textures, high-converting culinary poster" },
+      { code: "S10", cat: "CAT1", catName: "Modern & Studio", name: "Architectural ArchViz Render", keywords: "Photorealistic architectural exterior/interior visualization, V-Ray natural sunlight, lush landscaping, luxury real estate brochure" },
+
+      // KATEGORI 2: TEXTURED CRAFT, TACTILE & LUXURY
+      { code: "S11", cat: "CAT2", catName: "Craft & Luxury", name: "3D Papercraft / Layered Diorama", keywords: "Intricate cut-paper layers, visible cardstock paper grain texture, deep realistic drop shadows between layers, handcrafted diorama" },
+      { code: "S12", cat: "CAT2", catName: "Craft & Luxury", name: "Paper Quilling Art", keywords: "Rolled and pinched paper strips forming ornate filigree patterns and dimensional lettering on textured cardstock" },
+      { code: "S13", cat: "CAT2", catName: "Craft & Luxury", name: "Claymorphism / 3D Soft Plastisine", keywords: "Matte modeling clay texture, chubby rounded edges, soft subsurface scattering, playful bouncy pastel feel" },
+      { code: "S14", cat: "CAT2", catName: "Craft & Luxury", name: "Embroidery / Stitched Canvas", keywords: "Raised thread embroidery stitching, satin-stitch typography, woven linen canvas background, artisan craft texture" },
+      { code: "S15", cat: "CAT2", catName: "Craft & Luxury", name: "Knitted Wool / Amigurumi", keywords: "Fuzzy knitted yarn fibers, interlocking wool loops, warm cozy soft shadows, handmade miniature world" },
+      { code: "S16", cat: "CAT2", catName: "Craft & Luxury", name: "Wood Carving Relief & Polished Timber", keywords: "Sculpted mahogany and teak wood relief, rich natural woodgrain,精细 joinery, warm directional gallery lighting" },
+      { code: "S17", cat: "CAT2", catName: "Craft & Luxury", name: "Cardboard Box DIY Diorama", keywords: "Corrugated brown kraft cardboard cutouts, masking tape accents, bold marker annotations, creative recycle DIY aesthetic" },
+      { code: "S18", cat: "CAT2", catName: "Craft & Luxury", name: "Stone / Temple Relief / Sand Art", keywords: "Chiseled ancient temple stone bas-relief, weathered monolithic concrete and desert sand art texture, dramatic grazing sunlight" },
+      { code: "S19", cat: "CAT2", catName: "Craft & Luxury", name: "Ice / Crystal Prismatic", keywords: "Translucent sculpted polar ice and diamond crystal structure, rainbow prism light refractions, sparkling frost particles" },
+      { code: "S20", cat: "CAT2", catName: "Craft & Luxury", name: "Gold & Luxury Black Marble", keywords: "Brushed 24K gold metallic accents, Nero Marquina black and Carrara white marble texture, jewelry-grade spotlighting" },
+
+      // KATEGORI 3: RETRO, KLASIK, BUDAYA & NUSANTARA
+      { code: "S21", cat: "CAT3", catName: "Retro & Budaya", name: "Vintage / Retro 70s-80s Poster", keywords: "Aged distressed paper texture, subtle film grain noise, warm faded retro tones, classic 70s-80s poster typography" },
+      { code: "S22", cat: "CAT3", catName: "Retro & Budaya", name: "Pop Art / Halftone Comic Style", keywords: "Bold black ink outlines, Ben-Day halftone dot shading, high-contrast primary pop colors, punchy comic book panels" },
+      { code: "S23", cat: "CAT3", catName: "Retro & Budaya", name: "Hand-Drawn / Sketchbook Doodle", keywords: "Expressive ink pen and marker sketch lines, doodle illustrations on white textured sketchbook paper, personal study journal vibe" },
+      { code: "S24", cat: "CAT3", catName: "Retro & Budaya", name: "Watercolor Botanical Wash", keywords: "Translucent watercolor paint washes, organic artistic pigment bleeds, cold-pressed textured cotton paper" },
+      { code: "S25", cat: "CAT3", catName: "Retro & Budaya", name: "Collage / Punk Zine Style", keywords: "Torn newspaper clippings, ripped paper edges, masking tape, mixed-media photo cutouts, rebellious street zine aesthetic" },
+      { code: "S26", cat: "CAT3", catName: "Retro & Budaya", name: "Oil Painting / Renaissance Epic", keywords: "Rich impasto oil paint brushstrokes, dramatic Renaissance Chiaroscuro lighting, museum canvas texture" },
+      { code: "S27", cat: "CAT3", catName: "Retro & Budaya", name: "Charcoal / Da Vinci Pencil Sketch", keywords: "Rough charcoal and sepia ink drawings on aged parchment, Da Vinci invention codex aesthetic, fine cross-hatching" },
+      { code: "S28", cat: "CAT3", catName: "Retro & Budaya", name: "Ink Wash (Sumi-e) / Zen Minimalist", keywords: "Black sumi ink calligraphy brushwork on rice paper, wide tranquil negative space, bamboo and mountain mist" },
+      { code: "S29", cat: "CAT3", catName: "Retro & Budaya", name: "Ukiyo-e Japanese Woodblock", keywords: "Classic Japanese Edo woodblock print style, bold flowing outlines, vertical scroll composition, flat mineral pastel tones" },
+      { code: "S30", cat: "CAT3", catName: "Retro & Budaya", name: "Wayang Kulit Nusantara", keywords: "Intricate perforated leather puppetry (tatah sungging), layered shadow silhouette against glowing kelir screen, Javanese gold ornamentation" },
+      { code: "S31", cat: "CAT3", catName: "Retro & Budaya", name: "Traditional Batik Nusantara", keywords: "Authentic Indonesian Batik wax-resist geometric and floral motifs (Mega Mendung, Parang, Kawung) with modern vector infographic panels" },
+      { code: "S32", cat: "CAT3", catName: "Retro & Budaya", name: "Gothic / Cathedral Dark Art", keywords: "Symmetrical gothic cathedral arch elevation, intricate dark engraving, dramatic solemn contrast" },
+      { code: "S33", cat: "CAT3", catName: "Retro & Budaya", name: "Stained Glass (Kaca Patri Bercahaya)", keywords: "Luminous multicolored stained glass mosaic with dark lead cames, volumetric light rays projecting through glass" },
+
+      // KATEGORI 4: TEKNIS, SCI-FI, GAMING & HOLOGRAM
+      { code: "S34", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Technical Engineering Blueprint", keywords: "Deep Prussian blue blueprint background, razor-sharp white technical CAD lines, precision measurement grid and callouts" },
+      { code: "S35", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Chalkboard Classroom Art", keywords: "Matte black/green slate chalkboard background, dusty white and pastel colored chalk lettering and hand-drawn diagrams" },
+      { code: "S36", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Whiteboard Marker Brainstorm", keywords: "Glossy white dry-erase board background, colorful red/blue/green marker strokes, neat teacher handwriting and diagram arrows" },
+      { code: "S37", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Neon Cyberpunk & HUD Noir", keywords: "High-contrast neon cyan and magenta glow, rainy night metropolis atmosphere, futuristic Heads-Up Display (HUD) data frames" },
+      { code: "S38", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Continuous Neon Line Art", keywords: "Pitch-black background, objects and icons drawn with continuous glowing neon laser lines, sleek futuristic minimalism" },
+      { code: "S39", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Pixel Art / 8-Bit Retro Game", keywords: "Crisp 8-bit and 16-bit pixel art grid, retro arcade sprite aesthetics, gaming dialogue boxes" },
+      { code: "S40", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "LEGO / Glossy Plastic Bricks", keywords: "Charts, icons, and scenes constructed entirely from interlocking glossy ABS plastic toy bricks with visible studs" },
+      { code: "S41", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Voxel / Minecraft 3D Cube World", keywords: "Volumetric 3D pixel cube world, blocky voxel terrain and structures with soft global illumination" },
+      { code: "S42", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Cyber-Organic Biomechanical", keywords: "Fusion of advanced carbon-fiber bionics and mechanical prosthetics with living botanical leaves and biological tissue" },
+      { code: "S43", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Steampunk Brass & Victorian Gears", keywords: "Polished brass pipes, interlocking clockwork gears, steam gauges, Victorian industrial engraving" },
+      { code: "S44", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Bioluminescence Deep-Sea / Micro", keywords: "Pitch-black abyssal background illuminated by glowing organic neon blue, green, and violet bioluminescent organisms" },
+      { code: "S45", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Synthwave / Retro 80s Outrun", keywords: "Glowing perspective wireframe grid leading toward a digital 80s sunset, chrome metallic accents, neon violet-pink sky" },
+      { code: "S46", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Holographic / Digital Laser Blueprint", keywords: "Glowing cyan laser scan, floating translucent holographic telemetry data, 3D wireframe cutaway on dark tech stage" },
+      { code: "S47", cat: "CAT4", catName: "Teknis & Sci-Fi", name: "Brutalist Monolithic Concrete", keywords: "Massive monolithic raw architectural concrete blocks, heavy industrial scale, bold Swiss utilitarian typography" },
+
+      // KATEGORI 5: EDUKASI, AKADEMIK & ISLAMIC PEDAGOGY
+      { code: "S48", cat: "CAT5", catName: "Edukasi & Pesantren", name: "3D Pixar/Disney Character Storytelling", keywords: "Expressive friendly 3D animated characters, soft subsurface scattering, warm vibrant classroom/story environment" },
+      { code: "S49", cat: "CAT5", catName: "Edukasi & Pesantren", name: "Modern Islamic Geometric & Illuminated Manuscript", keywords: "Fine parchment texture framed by emerald and gold Moroccan Zellige geometric borders, 3D Kitab/Rehal icons, authentic Naskhi/Thuluth calligraphy" },
+      { code: "S50", cat: "CAT5", catName: "Edukasi & Pesantren", name: "Scientific & Medical Journal Precision", keywords: "National Geographic & medical textbook grade 3D anatomical/scientific visualization, crystal-clear cutaways, studio lab lighting" }
+    ];
+
+    const PALETTE_LIBRARY = [
+      { code: "P01", name: "Vibrant Culinary & Pop Promo", colors: ["#FFFDF7", "#FF3B30", "#FFCC00", "#1C1C1E"], desc: "Warm White (`#FFFDF7`), Appetite Red (`#FF3B30`), Golden Yellow (`#FFCC00`), Deep Charcoal (`#1C1C1E`)" },
+      { code: "P02", name: "Corporate Executive Blue/Slate", colors: ["#F8FAFC", "#0F172A", "#1D4ED8", "#64748B"], desc: "Ice White (`#F8FAFC`), Navy Slate (`#0F172A`), Royal Blue (`#1D4ED8`), Cool Grey (`#64748B`)" },
+      { code: "P03", name: "Dark Mode Tech & Gaming", colors: ["#0B0F19", "#00F0FF", "#3B82F6", "#F8FAFC"], desc: "Obsidian Dark (`#0B0F19`), Electric Cyan (`#00F0FF`), Cobalt Blue (`#3B82F6`), Crisp White (`#F8FAFC`)" },
+      { code: "P04", name: "Electric Automotive / EV Future", colors: ["#050B14", "#00D2FF", "#E2E8F0", "#10B981"], desc: "Deep Midnight (`#050B14`), Laser Blue (`#00D2FF`), Titanium Silver (`#E2E8F0`), Battery Emerald (`#10B981`)" },
+      { code: "P05", name: "Islamic Heritage & Pesantren", colors: ["#FBF9F5", "#064E3B", "#D97706", "#1E293B"], desc: "Warm Parchment (`#FBF9F5`), Deep Emerald (`#064E3B`), Royal Gold Foil (`#D97706`), Ink Navy (`#1E293B`)" },
+      { code: "P06", name: "Korean Village / Nature Property", colors: ["#F4F7F4", "#2D4A3E", "#C59B6D", "#1A2421"], desc: "Sage Mist (`#F4F7F4`), Pine Green (`#2D4A3E`), Warm Oak Wood (`#C59B6D`), Deep Charcoal (`#1A2421`)" },
+      { code: "P07", name: "Trust / Medical & Health", colors: ["#F0FDFA", "#0D9488", "#0284C7", "#0F172A"], desc: "Clean Mint White (`#F0FDFA`), Medical Teal (`#0D9488`), Clinical Blue (`#0284C7`), Dark Slate (`#0F172A`)" },
+      { code: "P08", name: "Luxury Gold & Black Marble", colors: ["#0A0A0A", "#D4AF37", "#F5F5F0", "#262626"], desc: "Rich Black (`#0A0A0A`), Metallic 24K Gold (`#D4AF37`), Carrara Marble (`#F5F5F0`), Charcoal (`#262626`)" },
+      { code: "P09", name: "Earth & Organic Tones", colors: ["#F4EFE6", "#8C5A3C", "#3A5A40", "#2B2118"], desc: "Warm Sand (`#F4EFE6`), Terracotta (`#8C5A3C`), Forest Olive (`#3A5A40`), Espresso Brown (`#2B2118`)" },
+      { code: "P10", name: "Pastel / Soft Friendly", colors: ["#FDF6F0", "#F8C8DC", "#B8E0D2", "#4A5568"], desc: "Soft Cream (`#FDF6F0`), Pastel Pink (`#F8C8DC`), Mint Green (`#B8E0D2`), Slate Text (`#4A5568`)" },
+      { code: "P11", name: "Urgency / Flash Sale Discount", colors: ["#DC2626", "#FEF08A", "#FFFFFF", "#111827"], desc: "Siren Red (`#DC2626`), Highlight Yellow (`#FEF08A`), Pure White (`#FFFFFF`), Bold Black (`#111827`)" },
+      { code: "P12", name: "Warm High-Energy Gradient", colors: ["#FFFBEB", "#EA580C", "#FACC15", "#7C2D12"], desc: "Warm Ivory (`#FFFBEB`), Blaze Orange (`#EA580C`), Amber Gold (`#FACC15`), Deep Rust (`#7C2D12`)" },
+      { code: "P13", name: "Cool Gradient / Travel Sky", colors: ["#F0F9FF", "#0284C7", "#6366F1", "#0F172A"], desc: "Sky Ice (`#F0F9FF`), Ocean Blue (`#0284C7`), Indigo Accent (`#6366F1`), Deep Navy (`#0F172A`)" },
+      { code: "P14", name: "Retro / Heritage Nostalgia", colors: ["#F5EBE6", "#C85A32", "#D99B26", "#2C3E35"], desc: "Aged Paper (`#F5EBE6`), Burnt Orange (`#C85A32`), Mustard Yellow (`#D99B26`), Vintage Green (`#2C3E35`)" },
+      { code: "P15", name: "Cyberpunk / Neon Magenta-Cyan", colors: ["#090414", "#FF007F", "#00F5D4", "#F1F5F9"], desc: "Void Purple (`#090414`), Neon Magenta (`#FF007F`), Cyber Aqua (`#00F5D4`), Crisp White (`#F1F5F9`)" }
+    ];
+
+    const TYPOGRAPHY_LIBRARY = [
+      { code: "T01", name: "Bold Geometric Sans-Serif (Modern & Tegas)" },
+      { code: "T02", name: "Classic Editorial Serif (Resmi & Berwibawa)" },
+      { code: "T03", name: "Rounded Friendly Sans (Ramah, Kuliner & Anak)" },
+      { code: "T04", name: "Condensed High-Impact (Tinggi Rapat — Otomotif/Olahraga)" },
+      { code: "T05", name: "Monospace / Tech Telemetry (Spesifikasi Gadget & Data)" },
+      { code: "T06", name: "Elegant Luxury High-Contrast Serif (Properti & Fashion Mewah)" },
+      { code: "T07", name: "Islamic Calligraphy Khat Naskhi/Thuluth + Modern Sans (Bilingual)" },
+      { code: "T08", name: "3D Embossed Headline + Flat 2D Readable Body Cards" },
+      { code: "T09", name: "Handwritten / Marker Script (Catatan Guru & Kutipan)" },
+      { code: "T10", name: "Retro Cooper 70s Groovy (Kuliner Legendaris & Vintage)" },
+      { code: "T11", name: "Grunge / Distressed Display (Peringatan & Aksi Ekstrem)" },
+      { code: "T12", name: "Clean UI Card Badge System (Aplikasi & Dashboard Modern)" }
+    ];
+
+    const CAMERA_LIBRARY = [
+      { code: "C01", name: "Straight-On 2D Editorial (Front View — Keterbacaan Maksimal)" },
+      { code: "C02", name: "Isometric 30° Orthographic (3D Presisi & Stabil)" },
+      { code: "C03", name: "Exploded Isometric Axis (Bongkar Pasang Komponen 3D)" },
+      { code: "C04", name: "Flat Lay / Knolling 90° Top-Down (Pandangan Atas Meja)" },
+      { code: "C05", name: "Hero Low-Angle Monumental (Sudut Bawah Megah)" },
+      { code: "C06", name: "Extreme Macro Close-Up (Fokus Detail Tekstur Makanan/Produk)" },
+      { code: "C07", name: "Cross-Section Cutaway View (Potongan Melintang Lapisan Dalam)" },
+      { code: "C08", name: "Drone / God's Eye Overview (Lanskap Wilayah & Masterplan)" },
+      { code: "C09", name: "Dynamic Wide-Angle / Fish-Eye (Sudut Lebar Aksi)" }
+    ];
+
+    // =========================================================================
+    // 2. 9 PRESET STUDI KASUS NYATA MIRA PROJEK
+    // =========================================================================
+    const PRESET_CASES = [
+      {
+        id: "mochi",
+        label: "🍩 Mavè Douchi (Bulk Order)",
+        rawTopic: "Lagi butuh snack buat acara? Mulai dari meeting, ulang tahun, sampai event kantor — Mavè Douchi siap bantuin! Paket Bulk Order Donut Mochi: 50 pcs Rp 875.000, 100 pcs Rp 1.740.000, 200 pcs Rp 3.490.000. Sudah include Packaging satuan, Sticker box, Varian bebas request.",
+        headline: "BUTUH SNACK UNTUK ACARA?",
+        subheadline: "Mulai dari meeting sampai pesta, Mavè Douchi siap melengkapi momen spesialmu!",
+        badge: "MOCHI LEMBUT, ISIAN MELIMPAH!",
+        purpose: "promo_pricing",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L04",
+        style: "S09",
+        palette: "P12",
+        typo: "T03",
+        camera: "C06",
+        refMode: "product_lock",
+        refDetail: "Kotak putih terbuka berisi 9 donut mochi aneka topping (coklat, keju, kacang, strawberry) di atas meja kayu hangat",
+        blocks: [
+          { title: "PAKET 50 PCS — Rp 875.000", desc: "Pilihan Hemat & Praktis untuk rapat tim atau kumpul keluarga kecil.", icon: "3D card badge showing 50 pcs box tier with warm golden sparkle" },
+          { title: "PAKET 100 PCS — Rp 1.740.000 (PALING POPULER!)", desc: "Paket favorit dengan nilai terbaik untuk acara kantor, pengajian, dan perayaan.", icon: "Highlighted center 3D gold-bordered card with 'PALING POPULER!' ribbon badge" },
+          { title: "PAKET 200 PCS — Rp 3.490.000", desc: "Harga Spesial Event besar, seminar, atau resepsi dengan kapasitas tamu banyak.", icon: "3D stacked gift boxes icon representing large event bulk order" },
+          { title: "FASILITAS ALL-IN (SUDAH TERMASUK)", desc: "Individual Packaging rapi & higienis, Custom Sticker Box branding acara, dan Mix Your Flavors bebas pilih varian rasa.", icon: "Three neat 2D/3D icons: individual sealed box, custom heart sticker badge, and 4 assorted mochi flavors" }
+        ],
+        footerRow: "Cocok untuk: Event Kantor | Ulang Tahun | Hampers & Relasi",
+        cta: "BOOKING SEKARANG, BIAR GAK KEHABISAN! Klik link di bio atau Chat Admin untuk Konsultasi & Order."
+      },
+      {
+        id: "dimsum",
+        label: "🥟 TRD Dimsum Halal",
+        rawTopic: "TRD Dimsum Siomay Halal Isi 50 Harga Rp109.900. The Real Dimsum adalah dimsum premium homemade 100% halal dari daging ayam segar pilihan tanpa pengawet. Pengiriman Instant & Sameday. Free saus 1 botol 200ml. Dilengkapi 4 langkah cara penyajian kukus 8-10 menit.",
+        headline: "TRD DIMSUM SIOMAY PREMIUM — ISI 50 PCS",
+        subheadline: "100% Halal, Homemade dari Daging Ayam Segar Pilihan Tanpa Bahan Pengawet",
+        badge: "HANYA Rp 109.900 / 50 PCS + FREE SAUS 200ML",
+        purpose: "promo_anatomy",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L05",
+        style: "S09",
+        palette: "P01",
+        typo: "T01",
+        camera: "C06",
+        refMode: "product_lock",
+        refDetail: "Klenteng bambu (bamboo steamer) mengepul berisi dimsum ayam padat dengan topping wortel dan botol saus sambal merah",
+        blocks: [
+          { title: "100% DAGING AYAM SEGAR & HALAL", desc: "Dibuat secara homemade dengan tekstur daging ayam yang juicy, padat, dan bebas bahan pengawet buatan.", icon: "3D halal seal badge and fresh premium chicken dimsum piece with steam" },
+          { title: "GRATIS 1 BOTOL SAUS SPESIAL (200 ML)", desc: "Setiap pembelian langsung mendapatkan 1 botol saus sambal dimsum ukuran 200ml yang pedas-manis gurih.", icon: "3D realistic 200ml red chili dipping sauce bottle with 'FREE BONUS' tag" },
+          { title: "PANDUAN 4 LANGKAH PENYAJIAN PRAKTIS", desc: "1) cairkan di suhu ruang, 2) panaskan kukusan 10 menit hingga mendidih, 3) kukus dimsum 8-10 menit, 4) sajikan hangat dengan saus.", icon: "4-step mini horizontal flowchart showing freezer thaw, boiling steamer, 8-10 min timer, and hot plated dimsum" },
+          { title: "PENGIRIMAN INSTANT & SAMEDAY", desc: "Dikemas vakum higienis dan dikirim via kurir Instant/Sameday untuk menjamin kesegaran maksimal sampai di rumah.", icon: "3D fast delivery scooter icon with cold-freshness shield" }
+        ],
+        footerRow: "100% Halal Certified | Tanpa Pengawet | Tekstur Padat & Juicy | Bonus Saus 200ml",
+        cta: "ORDER SEKARANG! Stok Harian Terbatas — Hubungi Admin untuk Pengiriman Hari Ini!"
+      },
+      {
+        id: "singapore",
+        label: "✈️ Wisata Singapore 3D2N",
+        rawTopic: "Paket Wisata Singapore 3 Hari 2 Malam Premium Experience. Diskon 25% OFF dari Rp 5.999.000 jadi Rp 4.499.000 berlaku hingga 30 Juni 2026. Fasilitas: Tiket Pesawat PP, Hotel Bintang 4, Transportasi Full AC, Makan 3x Sehari, Tour Guide Pro, Tiket Universal Studios, Merlion Park, Marina Bay Sands.",
+        headline: "LIBURAN HEMAT & EKSKLUSIF KE SINGAPORE",
+        subheadline: "Jelajah Ikon Dunia Tanpa Ribet — Premium 3 Hari 2 Malam Experience",
+        badge: "DISKON 25% OFF • Rp 5.999.000 -> Rp 4.499.000",
+        purpose: "promo_travel",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L12",
+        style: "S06",
+        palette: "P13",
+        typo: "T01",
+        camera: "C05",
+        refMode: "none",
+        refDetail: "Panorama cerah Marina Bay Sands, Merlion Park, dan bola dunia Universal Studios Singapore tanpa figur manusia",
+        blocks: [
+          { title: "FASILITAS LENGKAP ALL-IN (TANPA BIAYA TERSEMBUNYI)", desc: "Sudah termasuk Tiket Pesawat PP, Asuransi Perjalanan, Hotel Bintang 4 strategis, Transportasi Full AC, dan Makan 3x Sehari.", icon: "3D airplane ticket, 4-star golden hotel building, and halal dining platter icon" },
+          { title: "TIKET MASUK 3 DESTINASI IKONIK DUNIA", desc: "Akses langsung ke Universal Studios Singapore, Merlion Park, dan kawasan megah Marina Bay Sands.", icon: "3D miniature globe of Universal Studios, Merlion statue fountain, and Marina Bay Sands towers" },
+          { title: "ITINERARY NYAMAN & TOUR GUIDE PROFESIONAL", desc: "Jadwal wisata terencana padat namun tetap santai, didampingi pemandu berpengalaman yang ramah wisatawan Indonesia.", icon: "3D travel itinerary checklist and golden 10+ Years Experience trust badge" }
+        ],
+        footerRow: "10+ Tahun Pengalaman | Ribuan Traveler Puas | Harga Transparan | Berlaku s/d 30 Juni 2026",
+        cta: "AMANKAN SEAT SEKARANG! Hubungi WA / Klik Link di Bio Sebelum Kuota Promo Penuh."
+      },
+      {
+        id: "byd_seal",
+        label: "🚗 BYD Seal (Exploded View)",
+        rawTopic: "BYD SEAL Electric Sedan: Jarak tempuh hingga 650km (NEDC), Baterai 82.56 kWh, Torsi 670 Nm AWD. Dibangun dengan konsep Estetika Laut, e-Platform 3.0, Teknologi Baterai Blade Ultra-Aman, Teknologi CTB Cell-to-Body (kekakuan torsi 40.500 Nm/°), Sistem iTAC, dan Suspensi Wishbone Ganda.",
+        headline: "BYD SEAL — ELECTRIC SEDAN DRIVE THE FUTURE",
+        subheadline: "Arsitektur Mobil Listrik Pintar Berbasis e-Platform 3.0 & Desain Estetika Laut",
+        badge: "650 KM (NEDC) | 82.56 kWh | 670 Nm AWD",
+        purpose: "promo_exploded",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L07",
+        style: "S46",
+        palette: "P04",
+        typo: "T04",
+        camera: "C03",
+        refMode: "product_lock",
+        refDetail: "Sedan listrik BYD Seal warna biru metalik terurai secara vertikal (Bodi atas, modul baterai CTB di tengah, sasis motor ganda di bawah)",
+        blocks: [
+          { title: "TEKNOLOGI BLADE BATTERY ULTRA-AMAN", desc: "Lulus uji penetrasi paku dan suhu ekstrem 300°C tanpa api atau asap, menjamin keamanan baterai tertinggi.", icon: "3D exploded array of silver Blade Battery cells with glowing cyan thermal shield" },
+          { title: "TEKNOLOGI CTB (CELL-TO-BODY SANDWICH)", desc: "Penutup baterai menyatu langsung dengan lantai bodi kendaraan, mencapai kekakuan torsi luar biasa 40.500 N.m/°.", icon: "3D structural chassis cutaway showing battery-to-body sandwich integration" },
+          { title: "E-PLATFORM 3.0 & KENDALI TORSI iTAC", desc: "Sensor pintar mendeteksi kondisi roda secara instan, meminimalkan slip dan understeer untuk kendali presisi.", icon: "3D dual electric motors with glowing digital torque wave rings around the wheels" },
+          { title: "SUSPENSI WISHBONE GANDA + MULTI-LINK", desc: "Konfigurasi suspensi sports car tingkat tinggi yang menghadirkan stabilitas tikungan dan kenyamanan berkendara maksimal.", icon: "3D precision aluminum double-wishbone and multi-link suspension assembly" }
+        ],
+        footerRow: "Kecerdasan Digital | Efisiensi Energi | Keamanan Ekstrem | Estetika Laut Aerodinamis",
+        cta: "RASAKAN SENSASI BERKENDARA MASA DEPAN — Jadwalkan Test Drive BYD Seal Sekarang!"
+      },
+      {
+        id: "asus_rog",
+        label: "💻 ASUS ROG Strix G16",
+        rawTopic: "ASUS Gaming ROG STRIX G16 G615JMR Harga Rp 24.947.000. Spesifikasi: Intel Core i7-14650HX (14 Cores, up to 4.9GHz) / opsi i9-13980HX, RAM 32GB DDR5-5600MHz, SSD 1TB PCIe 4.0 NVMe, GPU NVIDIA GeForce RTX 5060 8GB GDDR7 (opsi RTX 4070), Layar 16-inch WUXGA IPS 165Hz/240Hz 100% sRGB G-Sync, Keyboard 4-Zone RGB, Wi-Fi 7, Baterai 90WHrs. Bonus Tas ROG, Mouse Gaming, Mousepad, Garansi Resmi.",
+        headline: "ASUS ROG STRIX G16 — DOMINATE THE GAME",
+        subheadline: "Laptop Gaming Performa Ekstrem dengan Arsitektur Pendingin Pintar & Layar 100% sRGB",
+        badge: "HARGA SPESIAL Rp 24.947.000 • FULLSET NEW SEGEL BOX",
+        purpose: "promo_exploded",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L07",
+        style: "S37",
+        palette: "P03",
+        typo: "T05",
+        camera: "C03",
+        refMode: "product_lock",
+        refDetail: "Laptop gaming ASUS ROG Strix G16 Eclipse Grey dengan logo mata ROG menyala dan keyboard 4-Zone RGB",
+        blocks: [
+          { title: "PROSESOR INTEL® CORE™ HX SERIES GENERASI TERBARU", desc: "Ditenagai Intel Core i7-14650HX (14 Cores, hingga 4.9GHz) / opsi Core i9-13980HX (24 Cores, hingga 5.6GHz) untuk komputasi berat.", icon: "3D glowing silicon processor chip with cyan circuit traces" },
+          { title: "GRAFIK NVIDIA® GEFORCE RTX™ 5060 8GB GDDR7", desc: "Performa ray-tracing dan AI frame generation mutakhir (tersedia juga varian RTX 4070 8GB GDDR6) untuk FPS rata kanan.", icon: "3D dual-fan GPU module with neon RGB lighting accents" },
+          { title: "MEMORI 32GB DDR5-5600MHz & 1TB SSD NVMe PCIe 4.0", desc: "Multitasking tanpa kompromi dengan dua slot M.2 NVMe berkecepatan baca/tulis instan hingga kapasitas 2TB.", icon: "3D DDR5 RAM sticks and gold-plated M.2 NVMe SSD card" },
+          { title: "LAYAR 16\" WUXGA 165Hz/240Hz 100% sRGB & WI-FI 7", desc: "Rasio 16:10 IPS Anti-Glare G-Sync (3ms), Keyboard 4-Zone RGB, Dolby Atmos, Thunderbolt 4, dan baterai besar 90WHrs.", icon: "3D ultra-thin bezel display panel with 100% sRGB color spectrum badge" }
+        ],
+        footerRow: "Bonus: Tas Backpack ROG + Mouse Gaming + Mousepad | Garansi 1 Tahun + Tukar Unit 3x24 Jam",
+        cta: "ORDER DI LAPTOP LEGENDS SEKARANG! Packing Super Aman + Asuransi 100% Uang Kembali."
+      },
+      {
+        id: "areum_parc",
+        label: "🏡 Areum Parc Bogor",
+        rawTopic: "AREUM PARC Hunian Bernuansa Korean Village Pertama di Bogor persembahan MAS GROUP (20+ Project di Jabodetabek). Luas lahan +- 15,7 Ha dengan 4 Cluster konsep Sejuk & Harmoni dengan Alam. Type 200 (3 Lantai, Dimensi 7x15m, 5 Kamar Tidur, 5 Kamar Mandi). Harga Normal 4M-an, Sekarang Hanya 2M-an! Fasilitas: One Gate System, Club House & Kolam Renang, Taman Tematik, Row Jalan 14m, Full Cover Biaya KPR, Smart Door Lock, CCTV, Canopy, Water Heater.",
+        headline: "AREUM PARC — KOREAN VILLAGE PERTAMA DI BOGOR",
+        subheadline: "Persembahan Terbaik MAS GROUP di Atas Lahan 15,7 Ha yang Sejuk & Harmoni dengan Alam",
+        badge: "SPECIAL OFFER: HARGA 4M-an KINI HANYA Rp 2M-an!",
+        purpose: "promo_travel",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L13",
+        style: "S10",
+        palette: "P06",
+        typo: "T06",
+        camera: "C08",
+        refMode: "product_lock",
+        refDetail: "Rumah mewah 3 lantai bergaya arsitektur modern Korean Village dengan fasad kayu hangat, kaca lebar, dan taman asri",
+        blocks: [
+          { title: "SPESIFIKASI UNGGULAN TYPE K200 (3 LANTAI)", desc: "Dimensi ideal 7 x 15 meter dengan 5 Kamar Tidur dan 5 Kamar Mandi mewah yang dirancang untuk kenyamanan keluarga besar.", icon: "3D architectural floorplan badge showing 3 floors, 7x15m dimension, 5 Bedrooms, and 5 Bathrooms" },
+          { title: "KAWASAN MANDIRI 15,7 HA & 4 CLUSTER TEMATIK", desc: "Dikembangkan oleh MAS GROUP (sukses dengan 20+ proyek di Jakarta, Bekasi, Tangerang, Depok, Bogor) dengan Row Jalan Utama 14 meter.", icon: "3D masterplan map showing 4 green Korean-inspired residential clusters and wide 14m boulevard" },
+          { title: "FASILITAS RESORT BINTANG LIMA DALAM CLUSTER", desc: "Club House & Kolam Renang, Gym Indoor, Lapangan Tenis, Taman Tematik, Playground Anak, dan Tempat Ibadah.", icon: "3D miniature icons of swimming pool clubhouse, tennis court, thematic garden, and mosque dome" },
+          { title: "KEAMANAN PINTAR & PROMO FULL COVER BIAYA KPR", desc: "Dilengkapi One Gate System dengan Access Card, Smart Door Lock, CCTV 24 Jam, gratis Canopy, Water Heater, dan bebas biaya KPR.", icon: "3D smart digital door lock, 24H security camera, and 'FULL COVER KPR' golden certificate" }
+        ],
+        footerRow: "20+ Proyek Sukses MAS GROUP | One Gate System | Smart Home Ready | Lokasi Asri Bogor",
+        cta: "HUBUNGI MARKETING KAMI & KUNJUNGI SHOW UNIT SEKARANG! Promo Minggu Ini Terbatas."
+      },
+      {
+        id: "puasa_maag",
+        label: "🌙 Tips Puasa Sehat Maag",
+        rawTopic: "Tips puasa sehat untuk penderita maag, sertakan 4 poin utama tentang pola makan saat sahur dan berbuka, pantangan makanan pemicu asam lambung, serta pengaturan waktu tidur dan hidrasi.",
+        headline: "PUASA NYAMAN TANPA PERIH MAAG",
+        subheadline: "Panduan Klinis Menjaga Lambung Tetap Tenang Selama 14 Jam Berpuasa",
+        badge: "AMAN UNTUK GERD & GASTRITIS",
+        purpose: "edu_general",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L01",
+        style: "S11",
+        palette: "P07",
+        typo: "T01",
+        camera: "C01",
+        refMode: "none",
+        refDetail: "",
+        blocks: [
+          { title: "1. WAJIB SAHUR KARBOHIDRAT KOMPLEKS (LOW GI)", desc: "Pilih beras merah, oatmeal, atau roti gandum yang dicerna lambat agar lambung tidak kosong terlalu lama dan energi stabil.", icon: "3D paper cutout of a warm bowl of oatmeal, brown rice, steamed chicken breast, and 3 dates" },
+          { title: "2. BERBUKA PORSI KECIL & BERTAHAP", desc: "Awali dengan air hangat dan kurma. Beri jeda 20-30 menit sebelum makan utama agar lambung tidak kaget dan begah.", icon: "3D paper cutout of warm water glass, sweet dates, and a 20-minute pause clock icon" },
+          { title: "3. HINDARI MAKANAN PEMICU ASAM & GAS", desc: "Jauhi gorengan berlemak tinggi, cabai pedas ekstrem, makanan asam, minuman bersoda, dan kopi saat perut kosong.", icon: "3D paper cutout of fried snacks, red chili, and coffee cup crossed out with a red prohibition circle" },
+          { title: "4. JEDA TIDUR 2 JAM & POLA AIR 2-4-2", desc: "Jangan langsung berbaring setelah sahur untuk mencegah refluks asam (GERD), dan penuhi 8 gelas air dengan rumus 2-4-2.", icon: "3D paper cutout of a person resting propped on a pillow and 8 arranged water glasses" }
+        ],
+        footerRow: "Pola Hidrasi 2-4-2 | Masak Kukus/Rebus/Panggang | Kelola Stres & Istirahat Cukup",
+        cta: "Konsultasikan jadwal obat pelindung lambung saat Sahur & Berbuka bersama dokter Anda."
+      },
+      {
+        id: "nahwu_kalimah",
+        label: "📖 Peta Konsep Ilmu Nahwu",
+        rawTopic: "Materi dasar Ilmu Nahwu untuk santri SMP/Pesantren: Pembagian Kalimat (Aqsamul Kalimah: Al-Ismu / Kata Benda, Al-Fi'lu / Kata Kerja, Al-Harfu / Kata Tugas) lengkap dengan definisi, ciri-ciri utama, dan contoh kalimat Bahasa Arab berharakat.",
+        headline: "أَقْسَامُ الْكَلِمَةِ — PEMBAGIAN KATA BAHASA ARAB",
+        subheadline: "Fondasi Utama Ilmu Nahwu: Memahami 3 Unsur Penyusun Kalimat Sempurna (Al-Kalam)",
+        badge: "MODUL INTI NAHWU DASAR SANTRI & PELAJAR",
+        purpose: "edu_islamic",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L11",
+        style: "S49",
+        palette: "P05",
+        typo: "T07",
+        camera: "C01",
+        refMode: "none",
+        refDetail: "",
+        blocks: [
+          { title: "1. الْاِسْمُ (AL-ISMU — KATA BENDA / NAMA)", desc: "Kata yang menunjukkan makna mandiri dan TIDAK terikat waktu. Ciri: Tanwin (كِتَابٌ), Alif-Lam (الْمَسْجِدُ), Huruf Jar, & Kasrah.", icon: "3D miniature mosque dome, classic yellow Kitab book, and name badge icon" },
+          { title: "2. الْفِعْلُ (AL-FI'LU — KATA KERJA)", desc: "Kata yang menunjukkan pekerjaan dan TERIKAT 3 waktu: Lampau/Madhi (كَتَبَ), Sekarang/Mudhari' (يَكْتُبُ), dan Perintah/Amr (اُكْتُبْ).", icon: "3D golden hourglass with 3 directional timeline arrows for past, present, and command" },
+          { title: "3. الْحَرْفُ (AL-HARFU — KATA TUGAS)", desc: "Kata yang maknanya baru sempurna saat bersambung dengan kata lain. Contoh: فِي (Di dalam), إِلَى (Ke), عَلَى (Di atas).", icon: "3D golden interlocking chain links and an ornate bridge connecting two pillars" }
+        ],
+        footerRow: "Contoh Kalimat Utuh: ذَهَبَ الطَّالِبُ إِلَى الْمَعْهَدِ (Fi'il: ذَهَبَ | Isim: الطَّالِبُ، الْمَعْهَدِ | Harf: إِلَى)",
+        cta: "Kuasai 3 Pilar Kalimat Ini sebagai Kunci Pertama Membaca Kitab Kuning (Turats)!"
+      },
+      {
+        id: "profil_bogor",
+        label: "🗺️ Profil Wilayah (5-Layer Diorama)",
+        rawTopic: "Infografis Profil Kota & Kabupaten Bogor (Kota Hujan): Luas wilayah, Kebun Raya Bogor & Istana Bogor, Gunung Salak & Puncak, Kujang & Tari Jaipong, serta 4 Kuliner Khas (Soto Mie Bogor, Asinan Bogor, Toge Goreng, Lapis Talas).",
+        headline: "BOGOR, JAWA BARAT — THE RAIN CITY HERITAGE",
+        subheadline: "Harmoni Alam Pegunungan, Warisan Sejarah Nusantara, dan Kekayaan Kuliner Legendaris",
+        badge: "5-LAYER Z-AXIS SCENIC DIORAMA • KOTA & KAB. BOGOR",
+        purpose: "edu_region",
+        engine: "universal",
+        format: "single",
+        ratio: "4:5",
+        layout: "L25",
+        style: "S11",
+        palette: "P09",
+        typo: "T02",
+        camera: "C02",
+        refMode: "none",
+        refDetail: "",
+        blocks: [
+          { title: "LAYER 1 & 2 (SKY MAP & HORIZON LANDMARKS)", desc: "Peta Cutout Wilayah Bogor di kiri atas, diikuti siluet megah Gunung Salak, Tugu Kujang, dan hamparan kebun teh Puncak di garis horison.", icon: "3D layered paper map of Bogor, Mount Salak peak, and iconic Kujang monument" },
+          { title: "LAYER 3 (MIDGROUND ARCHITECTURE & NATURE)", desc: "Bangunan klasik Istana Bogor lengkap dengan kawanan rusa tutul di halaman rumput hijau serta pepohonan raksasa Kebun Raya Bogor.", icon: "3D white colonial Bogor Presidential Palace with spotted deer and giant lotus pond" },
+          { title: "LAYER 4 (FOREGROUND CULTURE & FAKTA MENARIK)", desc: "Penari tradisional Sunda, angklung bambu, serta kotak Fakta Menarik: Kebun Raya Bogor berdiri sejak 1817 dengan koleksi 15.000+ pohon.", icon: "3D Sundanese traditional figures, bamboo angklung, and pinned parchment fact scroll" },
+          { title: "LAYER 5 (FOOTER SHELF — 4 KULINER KHAS BOGOR)", desc: "Rak kuliner bawah menampilkan 4 hidangan: 1) Soto Mie Bogor (kuah kaldu & risol), 2) Asinan Bogor, 3) Toge Goreng oncom, 4) Bolu Lapis Talas.", icon: "4 detailed 3D food bowls lined up horizontally on a wooden bottom shelf" }
+        ],
+        footerRow: "Julukan: Kota Hujan (Buitenzorg) | Ikon: Tugu Kujang & Istana Bogor | Kuliner: Soto Mie & Lapis Talas",
+        cta: "Jelajahi Pesona Sejarah, Pendidikan, dan Alam Sejuk Bumi Pasundan di Bogor!"
+      }
+    ];
+
+    // =========================================================================
+    // 3. STATE & INITIALIZATION
+    // =========================================================================
+    let currentSlideIndex = 0;
+    let generatedSlidesArray = [];
+    let extractedImageColors = [];
+
+    function initApp() {
+      populateSelectOptions();
+      renderPresetChips();
+      loadPresetCase("mochi");
+      renderCatalogCards();
+      renderHistoryList();
+    }
+
+    function populateSelectOptions() {
+      const layoutSel = document.getElementById("layoutSelect");
+      layoutSel.innerHTML = LAYOUT_LIBRARY.map(l =>
+        `<option value="${l.code}">${l.code} — ${l.name}</option>`
+      ).join("");
+
+      populateArtStyleSelect();
+
+      const paletteSel = document.getElementById("paletteSelect");
+      paletteSel.innerHTML = PALETTE_LIBRARY.map(p =>
+        `<option value="${p.code}">${p.code} — ${p.name}</option>`
+      ).join("");
+
+      const typoSel = document.getElementById("typographySelect");
+      typoSel.innerHTML = TYPOGRAPHY_LIBRARY.map(t =>
+        `<option value="${t.code}">${t.code} — ${t.name}</option>`
+      ).join("");
+
+      const camSel = document.getElementById("cameraSelect");
+      camSel.innerHTML = CAMERA_LIBRARY.map(c =>
+        `<option value="${c.code}">${c.code} — ${c.name}</option>`
+      ).join("");
+    }
+
+    function populateArtStyleSelect(selectedStyleCode) {
+      const catFilter = document.getElementById("styleCategoryFilter").value;
+      const styleSel = document.getElementById("artStyleSelect");
+      const currentVal = selectedStyleCode || styleSel.value || "S06";
+
+      const filtered = catFilter === "ALL"
+        ? ART_STYLE_LIBRARY
+        : ART_STYLE_LIBRARY.filter(s => s.cat === catFilter);
+
+      styleSel.innerHTML = filtered.map(s =>
+        `<option value="${s.code}">${s.code} — ${s.name}</option>`
+      ).join("");
+
+      if (filtered.some(s => s.code === currentVal)) {
+        styleSel.value = currentVal;
+      }
+      generateMasterPrompt();
+    }
+
+    function renderPresetChips() {
+      const container = document.getElementById("presetChipsContainer");
+      container.innerHTML = PRESET_CASES.map(p =>
+        `<button class="preset-chip" id="chip-${p.id}" onclick="loadPresetCase('${p.id}')">${p.label}</button>`
+      ).join("");
+    }
+
+    function loadPresetCase(presetId) {
+      const preset = PRESET_CASES.find(p => p.id === presetId);
+      if (!preset) return;
+
+      document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("active"));
+      const activeChip = document.getElementById(`chip-${presetId}`);
+      if (activeChip) activeChip.classList.add("active");
+
+      document.getElementById("rawTopicInput").value = preset.rawTopic;
+      document.getElementById("headlineInput").value = preset.headline;
+      document.getElementById("subheadlineInput").value = preset.subheadline;
+      document.getElementById("badgeInput").value = preset.badge;
+      document.getElementById("purposeModeSelect").value = preset.purpose;
+      document.getElementById("targetEngineSelect").value = preset.engine;
+      document.getElementById("outputFormatSelect").value = preset.format;
+      document.getElementById("aspectRatioSelect").value = preset.ratio;
+      document.getElementById("layoutSelect").value = preset.layout;
+      document.getElementById("styleCategoryFilter").value = "ALL";
+      populateArtStyleSelect(preset.style);
+      document.getElementById("paletteSelect").value = preset.palette;
+      document.getElementById("typographySelect").value = preset.typo;
+      document.getElementById("cameraSelect").value = preset.camera;
+      document.getElementById("refLockModeSelect").value = preset.refMode;
+      document.getElementById("refDetailInput").value = preset.refDetail;
+      document.getElementById("footerRowInput").value = preset.footerRow;
+      document.getElementById("ctaInput").value = preset.cta;
+
+      renderContentBlocksList(preset.blocks);
+      generateMasterPrompt();
+    }
+
+    function resetFormToBlank() {
+      document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("active"));
+      document.getElementById("rawTopicInput").value = "";
+      document.getElementById("headlineInput").value = "";
+      document.getElementById("subheadlineInput").value = "";
+      document.getElementById("badgeInput").value = "";
+      document.getElementById("refDetailInput").value = "";
+      document.getElementById("footerRowInput").value = "";
+      document.getElementById("ctaInput").value = "";
+      document.getElementById("customStyleInput").value = "";
+      renderContentBlocksList([
+        { title: "", desc: "", icon: "" },
+        { title: "", desc: "", icon: "" },
+        { title: "", desc: "", icon: "" }
+      ]);
+      generateMasterPrompt();
+      showToast("Form berhasil di-reset untuk topik baru!");
+    }
+
+    // =========================================================================
+    // 4. DYNAMIC CONTENT BLOCKS MANAGEMENT
+    // =========================================================================
+    function renderContentBlocksList(blocksArray) {
+      const container = document.getElementById("contentBlocksContainer");
+      container.innerHTML = blocksArray.map((b, idx) => `
+        <div class="content-block-item" data-block-index="${idx}">
+          <div class="block-item-header">
+            <span>BLOK KONTEN #${idx + 1}</span>
+            ${blocksArray.length > 1 ? `<button class="btn-remove-block" onclick="removeContentBlock(${idx})">Hapus Blok</button>` : ""}
+          </div>
+          <div class="form-grid-2" style="margin-bottom:8px;">
+            <div>
+              <input type="text" class="block-title-in" placeholder="Judul Poin / Nama Fitur (Contoh: 1. SAHUR LOW GI)" value="${escapeHtml(b.title)}" oninput="generateMasterPrompt()" />
+            </div>
+            <div>
+              <input type="text" class="block-icon-in" placeholder="Visual Cue Ikon 3D Spesifik (Contoh: 3D bowl of brown rice & dates)" value="${escapeHtml(b.icon)}" oninput="generateMasterPrompt()" />
+            </div>
+          </div>
+          <div>
+            <input type="text" class="block-desc-in" placeholder="Deskripsi lengkap & kontekstual (Wajib sesuai Hukum Nama + Deskripsi)..." value="${escapeHtml(b.desc)}" oninput="generateMasterPrompt()" />
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function getBlocksFromDOM() {
+      const items = document.querySelectorAll(".content-block-item");
+      const res = [];
+      items.forEach((item, idx) => {
+        const title = item.querySelector(".block-title-in").value.trim();
+        const desc = item.querySelector(".block-desc-in").value.trim();
+        const icon = item.querySelector(".block-icon-in").value.trim();
+        res.push({
+          title: title || `POIN UTAMA ${idx + 1}`,
+          desc: desc || "Penjelasan kontekstual yang padat, akurat, dan memberikan nilai informasi tinggi bagi pembaca.",
+          icon: icon || `Detailed 3D thematic icon accurately shaped to represent ${title || 'Point ' + (idx + 1)}`
+        });
+      });
+      return res;
+    }
+
+    function addContentBlock() {
+      const current = getBlocksFromDOM();
+      current.push({
+        title: `POIN UTAMA ${current.length + 1}`,
+        desc: "Tambahkan penjelasan fungsi, manfaat, atau rincian data di sini.",
+        icon: "3D realistic thematic object icon matching this point"
+      });
+      renderContentBlocksList(current);
+      generateMasterPrompt();
+    }
+
+    function removeContentBlock(idx) {
+      const current = getBlocksFromDOM();
+      if (current.length <= 1) return;
+      current.splice(idx, 1);
+      renderContentBlocksList(current);
+      generateMasterPrompt();
+    }
+
+    // =========================================================================
+    // 5. SMART RAW-TEXT PARSER & AUTO-MATCH VISUALS
+    // =========================================================================
+    function autoParseRawText() {
+      const raw = document.getElementById("rawTopicInput").value.trim();
+      if (!raw) {
+        showToast("Silakan ketik atau tempelkan Topik/Data di kotak utama terlebih dahulu!");
+        return;
+      }
+
+      const lines = raw.split(/\n+/).map(l => l.replace(/^[\-\•\*\#\s]+/, "").trim()).filter(Boolean);
+      const firstLine = lines[0] || raw.slice(0, 60);
+
+      document.getElementById("headlineInput").value = firstLine.toUpperCase().slice(0, 68);
+      document.getElementById("subheadlineInput").value = lines[1]
+        ? lines[1].slice(0, 110)
+        : `Panduan Visual Terstruktur & Informasi Lengkap Mengenai ${firstLine}`;
+
+      // Detect price or discount
+      const priceMatch = raw.match(/(Rp[\s\.\d]+(?:ribu|rb|juta|M-an)?|\d+%\s*OFF|Diskon\s*\d+%)/i);
+      if (priceMatch) {
+        document.getElementById("badgeInput").value = `PENAWARAN SPESIAL: ${priceMatch[0].toUpperCase()}`;
+      } else {
+        document.getElementById("badgeInput").value = "EDISI LENGKAP & TERSTRUKTUR";
+      }
+
+      // Build 4 rich blocks
+      const bodyLines = lines.slice(1).filter(l => l.length > 8);
+      const newBlocks = [];
+      if (bodyLines.length >= 2) {
+        bodyLines.slice(0, 5).forEach((line, idx) => {
+          const parts = line.split(/[:–—\-]/);
+          const bTitle = parts[0] && parts[0].length < 48
+            ? `${idx + 1}. ${parts[0].trim().toUpperCase()}`
+            : `${idx + 1}. POIN INTI: ${line.split(" ").slice(0, 4).join(" ").toUpperCase()}`;
+          const bDesc = parts.slice(1).join(" — ").trim() || line;
+          newBlocks.push({
+            title: bTitle,
+            desc: bDesc.length < 35 ? `${bDesc} — Dirancang secara presisi untuk memberikan hasil dan pemahaman maksimal.` : bDesc,
+            icon: `3D high-detail thematic icon physically representing ${bTitle}`
+          });
+        });
+      } else {
+        // Smart Auto-Enrichment when input is a short topic phrase
+        newBlocks.push(
+          { title: `1. DEFINISI & KONSEP INTI ${firstLine.toUpperCase()}`, desc: `Penjelasan mendasar mengenai prinsip utama, fungsi, dan alasan mengapa ${firstLine} sangat penting untuk dikuasai.`, icon: `3D central hero emblem representing ${firstLine}` },
+          { title: "2. KOMPONEN & STRATEGI UTAMA", desc: "Rincian langkah sistematis dan elemen kunci yang wajib diterapkan agar hasil tercapai secara efektif dan terukur.", icon: "3D precision gear and checklist card icon" },
+          { title: "3. KEUNGGULAN & MANFAAT NYATA", desc: "Dampak positif langsung yang dirasakan dari sisi efisiensi waktu, kualitas hasil, dan daya tarik visual.", icon: "3D glowing upward growth chart and trophy shield icon" },
+          { title: "4. TIPS PRAKTIS & KESALAHAN YANG WAJIB DIHINDARI", desc: "Panduan aplikatif di lapangan agar eksekusi berjalan mulus tanpa kendala teknis.", icon: "3D checkmark vs red cross comparison badge icon" }
+        );
+      }
+
+      renderContentBlocksList(newBlocks);
+      autoMatchVisuals(false);
+      generateMasterPrompt();
+      showToast("Data mentah berhasil dibedah & diperkaya menjadi blok infografis!");
+    }
+
+    function autoMatchVisuals(notify = true) {
+      const raw = (document.getElementById("rawTopicInput").value + " " + document.getElementById("headlineInput").value).toLowerCase();
+
+      if (/nahwu|shorof|balaghah|mantiq|fiqih|hadits|santri|pesantren|kitab|arab|islam|puasa|ramadan|adab/.test(raw)) {
+        document.getElementById("purposeModeSelect").value = /puasa|sehat|maag/.test(raw) ? "edu_general" : "edu_islamic";
+        document.getElementById("layoutSelect").value = /nahwu|shorof|pembagian|kalimah/.test(raw) ? "L11" : "L01";
+        document.getElementById("styleCategoryFilter").value = "ALL";
+        populateArtStyleSelect(/puasa|anak/.test(raw) ? "S11" : "S49");
+        document.getElementById("paletteSelect").value = "P05";
+        document.getElementById("typographySelect").value = "T07";
+        document.getElementById("cameraSelect").value = "C01";
+      } else if (/mobil|byd|motor|mesin|laptop|rog|asus|spesifikasi|baterai|rtx|bongkar/.test(raw)) {
+        document.getElementById("purposeModeSelect").value = "promo_exploded";
+        document.getElementById("layoutSelect").value = "L07";
+        document.getElementById("styleCategoryFilter").value = "ALL";
+        populateArtStyleSelect("S46");
+        document.getElementById("paletteSelect").value = "P04";
+        document.getElementById("typographySelect").value = "T04";
+        document.getElementById("cameraSelect").value = "C03";
+      } else if (/makanan|kuliner|dimsum|mochi|ayam|geprek|nasi|kopi|minuman|snack|paket/.test(raw)) {
+        document.getElementById("purposeModeSelect").value = /paket|50 pcs|100 pcs/.test(raw) ? "promo_pricing" : "promo_anatomy";
+        document.getElementById("layoutSelect").value = /paket|50 pcs/.test(raw) ? "L04" : "L05";
+        document.getElementById("styleCategoryFilter").value = "ALL";
+        populateArtStyleSelect("S09");
+        document.getElementById("paletteSelect").value = "P01";
+        document.getElementById("typographySelect").value = "T03";
+        document.getElementById("cameraSelect").value = "C06";
+      } else if (/rumah|cluster|properti|hunian|wisata|travel|singapore|tour|hotel/.test(raw)) {
+        document.getElementById("purposeModeSelect").value = "promo_travel";
+        document.getElementById("layoutSelect").value = /cluster|hunian|properti/.test(raw) ? "L13" : "L12";
+        document.getElementById("styleCategoryFilter").value = "ALL";
+        populateArtStyleSelect(/cluster|hunian/.test(raw) ? "S10" : "S06");
+        document.getElementById("paletteSelect").value = /cluster|hunian/.test(raw) ? "P06" : "P13";
+        document.getElementById("typographySelect").value = "T01";
+        document.getElementById("cameraSelect").value = "C08";
+      } else if (/profil|kota|provinsi|negara|bogor|jakarta|indonesia/.test(raw)) {
+        document.getElementById("purposeModeSelect").value = "edu_region";
+        document.getElementById("layoutSelect").value = "L25";
+        document.getElementById("styleCategoryFilter").value = "ALL";
+        populateArtStyleSelect("S11");
+        document.getElementById("paletteSelect").value = "P09";
+        document.getElementById("typographySelect").value = "T02";
+        document.getElementById("cameraSelect").value = "C02";
+      }
+
+      generateMasterPrompt();
+      if (notify) showToast("Kombinasi Layout, Art Style & Palet Warna terbaik telah disesuaikan!");
+    }
+
+    // =========================================================================
+    // 6. REFERENCE IMAGE UPLOAD & DOMINANT HEX COLOR EXTRACTION
+    // =========================================================================
+    function handleReferenceImageUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          document.getElementById("refThumbImg").src = e.target.result;
+          document.getElementById("refFileName").textContent = file.name;
+          document.getElementById("refImageMeta").textContent = `Dimensi Asli: ${img.width} x ${img.height} px • Mode Anti-Halu Aktif`;
+          document.getElementById("refPreviewBox").classList.add("active");
+
+          if (document.getElementById("refLockModeSelect").value === "none") {
+            document.getElementById("refLockModeSelect").value = "product_lock";
+          }
+
+          // Extract 4 dominant colors using Canvas
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          canvas.width = 40;
+          canvas.height = 40;
+          ctx.drawImage(img, 0, 0, 40, 40);
+          const sampleCoords = [[10, 10], [28, 10], [20, 20], [20, 32]];
+          extractedImageColors = sampleCoords.map(([x, y]) => {
+            const p = ctx.getImageData(x, y, 1, 1).data;
+            return "#" + [p[0], p[1], p[2]].map(v => v.toString(16).padStart(2, "0")).join("").toUpperCase();
+          });
+
+          const swatchHtml = extractedImageColors.map(hex => `
+            <span class="color-swatch-pill">
+              <span class="swatch-dot" style="background:${hex}"></span>
+              <span>${hex}</span>
+            </span>
+          `).join("");
+          document.getElementById("extractedSwatchesContainer").innerHTML =
+            `<span style="font-size:11px; color:var(--text-muted);">Palet Ekstraksi:</span>` + swatchHtml;
+
+          generateMasterPrompt();
+          showToast("Gambar referensi dianalisis & pengunci Anti-Halu diaktifkan!");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearReferenceImage() {
+      document.getElementById("refImageFile").value = "";
+      document.getElementById("refPreviewBox").classList.remove("active");
+      document.getElementById("refLockModeSelect").value = "none";
+      extractedImageColors = [];
+      generateMasterPrompt();
+    }
+
+    function handleOutputFormatChange() {
+      const fmt = document.getElementById("outputFormatSelect").value;
+      if (fmt !== "single") {
+        document.getElementById("aspectRatioSelect").value = "4:5";
+      }
+      generateMasterPrompt();
+    }
+
+    // =========================================================================
+    // 7. CORE ENGINE: GENERATE MASTER PROMPT (MARKDOWN, CAROUSEL & JSON)
+    // =========================================================================
+    function generateMasterPrompt(showNotification = false) {
+      const headline = (document.getElementById("headlineInput").value || "JUDUL UTAMA INFOGRAFIS").trim();
+      const subheadline = (document.getElementById("subheadlineInput").value || "Subjudul Kontekstual & Ringkasan Nilai Utama").trim();
+      const badge = (document.getElementById("badgeInput").value || "HIGH-DENSITY VISUAL GUIDE").trim();
+      const purposeMode = document.getElementById("purposeModeSelect").value;
+      const targetEngine = document.getElementById("targetEngineSelect").value;
+      const outputFormat = document.getElementById("outputFormatSelect").value;
+      const aspectRatio = document.getElementById("aspectRatioSelect").value;
+      const syntaxMode = document.getElementById("syntaxModeSelect").value;
+
+      const layoutCode = document.getElementById("layoutSelect").value || "L05";
+      const styleCode = document.getElementById("artStyleSelect").value || "S06";
+      const customStyle = document.getElementById("customStyleInput").value.trim();
+      const paletteCode = document.getElementById("paletteSelect").value || "P01";
+      const typoCode = document.getElementById("typographySelect").value || "T01";
+      const cameraCode = document.getElementById("cameraSelect").value || "C01";
+
+      const refLockMode = document.getElementById("refLockModeSelect").value;
+      const refDetail = document.getElementById("refDetailInput").value.trim();
+      const footerRow = (document.getElementById("footerRowInput").value || "Akurasi Tinggi | Struktur Padat | Visual Kelas Agensi").trim();
+      const ctaText = (document.getElementById("ctaInput").value || "Simpan & Bagikan Infografis Ini Sekarang!").trim();
+
+      const layoutObj = LAYOUT_LIBRARY.find(l => l.code === layoutCode) || LAYOUT_LIBRARY[0];
+      const styleObj = ART_STYLE_LIBRARY.find(s => s.code === styleCode) || ART_STYLE_LIBRARY[5];
+      const paletteObj = PALETTE_LIBRARY.find(p => p.code === paletteCode) || PALETTE_LIBRARY[0];
+      const typoObj = TYPOGRAPHY_LIBRARY.find(t => t.code === typoCode) || TYPOGRAPHY_LIBRARY[0];
+      const camObj = CAMERA_LIBRARY.find(c => c.code === cameraCode) || CAMERA_LIBRARY[0];
+
+      const blocks = getBlocksFromDOM();
+
+      // Update UI Hints & Palette Strip
+      document.getElementById("layoutCodeHint").textContent = layoutObj.code;
+      document.getElementById("styleCodeHint").textContent = styleObj.code;
+      const activeColors = extractedImageColors.length === 4 ? extractedImageColors : paletteObj.colors;
+      document.getElementById("paletteStripPreview").innerHTML = activeColors.map(c => `<div style="background:${c}"></div>`).join("");
+
+      // Update Live Wireframe & Metrics
+      updateLiveWireframe(aspectRatio, layoutObj, styleObj, activeColors, blocks.length);
+
+      // Engine description
+      const engineMap = {
+        universal: 'Nano Banana Pro ("Thinking" Mode) / ChatGPT Plus (DALL-E 3) / Flux.1 Pro Ready',
+        nanobanana: 'Nano Banana Pro ("Thinking" Mode — High-Density Text & Multi-Layer Precision)',
+        dalle3: 'ChatGPT Plus (DALL-E 3 Conversational Studio — Cohesive Spatial & Reference Integration)',
+        flux: 'Flux.1 Pro / Dev (Photorealistic Surface Texture & Exact Quoted Typography)',
+        midjourney: 'Midjourney v6.1 (High-Fidelity Editorial & Commercial Render)'
+      };
+      const engineString = engineMap[targetEngine] || engineMap.universal;
+
+      // Reference Lock string
+      let refLockInstruction = "Autonomous High-Precision Generation based on topic specifications.";
+      if (refLockMode === "product_lock") {
+        refLockInstruction = `STRICT SUBJECT IDENTITY LOCK (ANTI-HALU): Use the uploaded reference image as the exact ground-truth for the Hero Product${refDetail ? " (" + refDetail + ")" : ""}. Preserve 100% of the original packaging geometry, container shape, label proportions, brand logo placement, and product color/texture. Do NOT hallucinate, morph, or redesign the product container; only upgrade the surrounding studio lighting, podium, background environment, and 2D infographic callout cards.`;
+      } else if (refLockMode === "style_lock") {
+        refLockInstruction = `VISUAL STYLE & LIGHTING TRANSFER LOCK: Replicate the exact surface material, studio lighting mood, and aesthetic finish from the uploaded reference image${refDetail ? " (" + refDetail + ")" : ""} while rendering the new topic content.`;
+      } else if (refLockMode === "layout_lock") {
+        refLockInstruction = `SPATIAL LAYOUT & PALETTE BLUEPRINT LOCK: Follow the spatial grid arrangement and color harmony of the uploaded reference image${refDetail ? " (" + refDetail + ")" : ""}.`;
+      }
+
+      const fullStyleText = customStyle
+        ? `**${styleObj.name} + Custom Mashup (${customStyle})** — ${styleObj.keywords}. Enhanced with ${customStyle}.`
+        : `**${styleObj.name}** — ${styleObj.keywords}.`;
+
+      const paletteString = extractedImageColors.length === 4
+        ? `Extracted Reference Palette: Primary (${extractedImageColors[0]}), Secondary (${extractedImageColors[1]}), Accent (${extractedImageColors[2]}), Background (${extractedImageColors[3]})`
+        : paletteObj.desc;
+
+      // Bilingual Arabic instruction if Islamic Pedagogy is selected
+      const arabicRule = (purposeMode === "edu_islamic" || typoCode === "T07")
+        ? "\n- **Arabic Script Precision**: Render all Arabic terms and examples in authentic, well-proportioned vocalized Naskhi/Thuluth calligraphy with accurate vowel marks (harakat) alongside clean Indonesian sans-serif text."
+        : "";
+
+      const mjSuffix = targetEngine === "midjourney"
+        ? `\n\n--ar ${aspectRatio} --v 6.1 --style raw --q 2`
+        : "";
+
+      // JSON MODE
+      if (syntaxMode === "json") {
+        document.getElementById("terminalFilenameLabel").textContent = "output_schema.json";
+        document.getElementById("carouselSlideTabsBar").classList.remove("active");
+        const forbiddenJson = [
+          "SECTION 1", "SECTION 2", "SECTION 3", "REGION:", "VISUAL COMPOSITION:",
+          "LAYOUT STRUCTURE:", "VISUAL CUE:", "IMAGE REFERENCE LOCK:", "TARGET ENGINE:",
+          ...blocks.map((_, i) => `BLOCK_${i + 1}`),
+          ...activeColors
+        ];
+        const jsonPayload = {
+          role: "master_prompt_builder_pro_v3_by_mira_projek",
+          project_type: purposeMode,
+          output_settings: {
+            output_format: outputFormat,
+            aspect_ratio: aspectRatio,
+            resolution: "8K Ultra HD",
+            target_engine: engineString,
+            language: "Indonesian"
+          },
+          image_reference_lock: {
+            mode: refLockMode,
+            reference_detail: refDetail || "None",
+            instruction: refLockInstruction
+          },
+          headline_section: {
+            headline_text: headline,
+            subheadline_text: subheadline,
+            key_badge: badge,
+            typography_style: `${typoObj.name} — Rendered strictly on flat 2D frontal horizontal UI overlay cards (0-degree tilt)`
+          },
+          main_visual_section: {
+            layout_architecture: `${layoutObj.code} — ${layoutObj.name}: ${layoutObj.desc}`,
+            art_style: fullStyleText,
+            camera_and_composition: camObj.name,
+            hero_visual_focus: refDetail || `High-impact 3D/realistic central visualization of ${headline}`
+          },
+          color_palette: {
+            palette_name: paletteObj.name,
+            hex_codes: activeColors,
+            description: paletteString
+          },
+          content_blocks: blocks.map((b, i) => ({
+            block_id: `BLOCK_${i + 1}`,
+            title: b.title,
+            description: b.desc,
+            exact_3d_icon_cue: b.icon
+          })),
+          footer_cta_section: {
+            supporting_value_row: footerRow,
+            call_to_action_text: ctaText
+          },
+          strict_visual_policy: {
+            visible_text_policy: "design_text_only",
+            ui_overlay_rule: "Render 3D objects with depth, but keep ALL text labels, titles, and callout cards strictly flat, horizontal, frontal 2D (non-isometric, 0-degree tilt).",
+            exact_icon_rule: "Every icon must physically match the real-world object described in its block. No generic or abstract symbols.",
+            forbidden_words_do_not_render: forbiddenJson
+          }
+        };
+        document.getElementById("terminalOutputPre").textContent = JSON.stringify(jsonPayload, null, 2);
+        if (showNotification) showToast("JSON Master Schema berhasil di-generate!");
+        return;
+      }
+
+      document.getElementById("terminalFilenameLabel").textContent = "output_terminal.md";
+
+      // CAROUSEL SEPARATE SLIDES MODE
+      if (outputFormat === "carousel_slides") {
+        generatedSlidesArray = buildCarouselSlidesPrompts({
+          headline, subheadline, badge, aspectRatio, engineString, fullStyleText,
+          refLockInstruction, paletteString, typoObj, styleObj, camObj, layoutObj,
+          blocks, footerRow, ctaText, activeColors, arabicRule, mjSuffix
+        });
+        renderCarouselTabs();
+        if (showNotification) showToast(`Berhasil meracik ${generatedSlidesArray.length} Slide Prompt Carousel!`);
+        return;
+      }
+
+      document.getElementById("carouselSlideTabsBar").classList.remove("active");
+
+      // CAROUSEL ONE-SHOT COMPOSITE GRID MODE
+      if (outputFormat === "carousel_grid") {
+        const totalPanels = blocks.length + 2;
+        const gridDim = totalPanels <= 4 ? "2x2 (4 Equal Panels)" : totalPanels <= 6 ? "3x2 (6 Equal Panels)" : "3x3 (Equal Panels)";
+        const panelLines = blocks.map((b, idx) =>
+          `PANEL ${idx + 2} (CONTENT SLIDE ${idx + 2}/${totalPanels}):\n- VISUAL CUE: ${b.icon}\n- Headline: "${b.title}"\n- Body Text: "${b.desc}"\n- Internal Navigation: Small consistent swipe arrow icon at bottom-right corner.`
+        ).join("\n\n");
+
+        const forbiddenList = [
+          `"PANEL 1"`, ...blocks.map((_, i) => `"PANEL ${i + 2}"`), `"PANEL ${totalPanels}"`,
+          `"VISUAL CUE:"`, `"LAYOUT STRUCTURE:"`, `"KONSISTENSI VISUAL BRAND:"`,
+          `"IMAGE REFERENCE LOCK:"`, `"TARGET ENGINE:"`,
+          ...activeColors.map(c => `"${c}"`)
+        ].join(", ");
+
+        const gridPrompt = `# MASTER PROMPT CAROUSEL (ONE-SHOT COMPOSITE GRID) : ${headline}
+ASPECT RATIO: ${aspectRatio} (Uniform Multi-Panel Carousel Sheet)
+TARGET ENGINE: ${engineString}
+STYLE: ${fullStyleText}
+IMAGE REFERENCE LOCK: ${refLockInstruction}
+
+KONSISTENSI VISUAL BRAND:
+- Palette: ${paletteString}
+- Typography: ${typoObj.name} — All text rendered on flat 2D frontal horizontal UI overlay cards (0-degree tilt).
+- Camera & Lighting: ${camObj.name} with studio-grade commercial lighting.
+
+LAYOUT STRUCTURE: Uniform ${gridDim} Grid Sheet containing ${totalPanels} Equal-Sized Panels separated by crisp white borders. No external header outside the grid.
+
+PANEL 1 (Top-Left — THE COVER HOOK SLIDE 1/${totalPanels}):
+- VISUAL CUE: High-impact Hero Visual of ${refDetail || headline} dominating the center.
+- Main Headline: "${headline}"
+- Subtitle: "${subheadline}"
+- Badge: "${badge}"
+- Internal Navigation: Small consistent swipe arrow icon at bottom-right corner.
+
+${panelLines}
+
+PANEL ${totalPanels} (Bottom-Right — SUMMARY & CALL TO ACTION SLIDE ${totalPanels}/${totalPanels}):
+- VISUAL CUE: Trust badge and action button banner.
+- Supporting Value Row: "${footerRow}"
+- Call to Action: "${ctaText}"
+- Internal Navigation: Final slide — NO swipe arrow.
+
+AI OUTPUT COMPLIANCE RULES:
+- **Uniform Grid Precision**: Ensure all ${totalPanels} panels are 100% equal in size with distinct white crop borders so they can be sliced cleanly for Instagram Carousel.
+- **2D Frontal Text Overlay Rule**: Keep ALL text inside each panel strictly flat, frontal, horizontal, and ultra-legible.${arabicRule}
+- **STRICT METADATA EXCLUSION**: Do NOT render technical labels or hex codes as visible text inside the image:
+> **FORBIDDEN WORDS:** ${forbiddenList}${mjSuffix}`;
+
+        document.getElementById("terminalOutputPre").textContent = gridPrompt;
+        if (showNotification) showToast("Master Prompt Carousel 1-Page Grid siap disalin!");
+        return;
+      }
+
+      // DEFAULT SINGLE IMAGE HIGH-DENSITY PROMPT
+      const blocksText = blocks.map((b, i) =>
+`BLOCK ${i + 1} (${b.title})
+- VISUAL CUE: ${b.icon}
+- Title: "${b.title}"
+- Text: "${b.desc}"`
+      ).join("\n\n");
+
+      const dynamicForbidden = [
+        `"SECTION 1"`, `"SECTION 2"`, `"SECTION 3"`, `"REGION:"`,
+        `"VISUAL COMPOSITION:"`, `"TEXT ELEMENTS:"`, `"LAYOUT STRUCTURE:"`,
+        ...blocks.map((_, i) => `"BLOCK ${i + 1}"`),
+        `"VISUAL CUE:"`, `"IMAGE REFERENCE LOCK:"`, `"TARGET ENGINE:"`,
+        `"KONSISTENSI VISUAL BRAND:"`,
+        ...activeColors.map(c => `"${c}"`)
+      ];
+
+      document.getElementById("metricForbiddenVal").textContent = `${dynamicForbidden.length} Label + HEX Diblokir`;
+
+      const singlePrompt = `# MASTER PROMPT INFOGRAFIS : ${headline}
+ASPECT RATIO: ${aspectRatio} (High-Density Vertical/Editorial Canvas)
+TARGET ENGINE: ${engineString}
+STYLE: ${fullStyleText}
+IMAGE REFERENCE LOCK: ${refLockInstruction}
+
+KONSISTENSI VISUAL BRAND:
+- Palette: ${paletteString}
+- Typography: ${typoObj.name} — All text rendered on flat 2D frontal horizontal UI overlay cards for 100% crisp readability.
+- Texture & Material: ${styleObj.keywords}
+- Camera & Lighting: ${camObj.name} with studio-grade commercial lighting and soft ambient occlusion shadows.
+
+LAYOUT STRUCTURE: ${layoutObj.code} ${layoutObj.name} — ${layoutObj.desc}
+
+SECTION 1 (HEADER & HOOK)
+REGION: Top 18%
+VISUAL COMPOSITION: High-impact header stage framed according to ${styleObj.name} aesthetic, featuring a prominent top badge and clear visual hierarchy.
+TEXT ELEMENTS (Render Strictly Inside Clean Frontal UI Header):
+- Main Title: "${headline}"
+- Subtitle: "${subheadline}"
+- Key Badge / Highlight: "${badge}"
+
+SECTION 2 (MAIN CONTENT & HERO BODY)
+REGION: Middle 64%
+VISUAL COMPOSITION: ${refDetail ? "Central Hero Focus: " + refDetail + ". " : ""}Structured into ${blocks.length} distinct, information-dense visual blocks following the ${layoutObj.name} arrangement. Every block pairs an exact-identity 3D visual cue with a flat 2D frontal text card.
+
+${blocksText}
+
+SECTION 3 (FOOTER, VALUE ROW & CALL TO ACTION)
+REGION: Bottom 18%
+VISUAL COMPOSITION: Distinct bottom footer dock containing supporting feature icons and a high-contrast Call-to-Action ribbon banner.
+TEXT ELEMENTS:
+- Supporting Row / Summary: "${footerRow}"
+- Call to Action / Footer Text: "${ctaText}"
+
+AI OUTPUT COMPLIANCE RULES:
+- **Enable Advanced Text Rendering**: Ensure all text inside double quotes ("...") is rendered with absolute clarity, exact Indonesian/target-language spelling, and zero typos.
+- **2D Frontal Text Overlay Rule**: Render all scenes and hero objects in rich 3D/tactile depth, but keep ALL text labels, titles, and callout cards strictly flat, frontal, horizontal (0-degree tilt), and perpendicular to the camera. Never warp or skew text into isometric angles.${arabicRule}
+- **Exact-Identity Icons**: Every icon must physically match the real-world object described in its block. No generic or abstract placeholder symbols.
+- **STRICT METADATA & LABEL EXCLUSION**: The following technical headers, region percentages, and hex codes are **INTERNAL BACKEND INSTRUCTIONS ONLY**. Do NOT render any of them as visible text pixels inside the image:
+> **FORBIDDEN WORDS:** ${dynamicForbidden.join(", ")}
+- **Visual Hierarchy & Density Check**: Main Title must be the largest focal text, followed by Block Titles and body descriptions. Fill any dead space with topic-relevant subtle textures or micro-icons.
+- **8K Ultra-HD Output**: Crisp edges, studio-grade lighting, accurate color fidelity matching the defined Palette.${mjSuffix}`;
+
+      document.getElementById("terminalOutputPre").textContent = singlePrompt;
+      if (showNotification) showToast("Master Prompt v3.0 berhasil di-generate!");
+    }
+
+    function buildCarouselSlidesPrompts(cfg) {
+      const totalSlides = cfg.blocks.length + 2;
+      const slides = [];
+      const commonSpecs = `ASPECT RATIO: 4:5 (Vertical Social Media Carousel — 1080x1350px)
+TARGET ENGINE: ${cfg.engineString}
+STYLE (100% LOCKED ACROSS ALL SLIDES): ${cfg.fullStyleText}
+IMAGE REFERENCE LOCK: ${cfg.refLockInstruction}
+KONSISTENSI VISUAL BRAND:
+- Palette: ${cfg.paletteString}
+- Typography: ${cfg.typoObj.name} (Flat 2D Frontal UI Cards)
+- Camera & Lighting: ${cfg.camObj.name}`;
+
+      const forbiddenSlide = `"SECTION 1", "SECTION 2", "SECTION 3", "VISUAL CUE:", "STYLE:", "KONSISTENSI VISUAL BRAND:", ${cfg.activeColors.map(c => `"${c}"`).join(", ")}`;
+
+      // Slide 1: Cover Hook
+      slides.push({
+        label: `Slide 1 (Cover Hook)`,
+        content: `# MASTER PROMPT CAROUSEL : ${cfg.headline} — PAGE 1/${totalSlides} (THE COVER HOOK)
+${commonSpecs}
+
+SECTION 1 (HERO COVER VISUAL)
+- VISUAL CUE: Stop-scrolling Hero Visualization of ${cfg.refDetail || cfg.headline} at center stage with dramatic studio lighting.
+SECTION 2 (COVER HEADLINE TEXT — FLAT 2D FRONTAL)
+- Main Headline: "${cfg.headline}"
+- Subtitle: "${cfg.subheadline}"
+- Highlight Badge: "${cfg.badge}"
+SECTION 3 (NAVIGATION FOOTER)
+- Visual Navigation: Small consistent swipe arrow icon at bottom-right corner with text "Geser ->" (Page 1/${totalSlides}).
+
+AI OUTPUT COMPLIANCE RULES:
+- Render all quoted text clearly with zero typos on flat 2D frontal UI overlay.
+> **FORBIDDEN WORDS:** ${forbiddenSlide}${cfg.mjSuffix}`
+      });
+
+      // Middle Slides: 1 Block per Slide
+      cfg.blocks.forEach((b, idx) => {
+        const pageNum = idx + 2;
+        slides.push({
+          label: `Slide ${pageNum} (Poin ${idx + 1})`,
+          content: `# MASTER PROMPT CAROUSEL : ${cfg.headline} — PAGE ${pageNum}/${totalSlides} (VALUE POINT ${idx + 1})
+${commonSpecs}
+
+SECTION 1 (FOCAL VISUAL POINT ${idx + 1})
+- VISUAL CUE: ${b.icon} rendered in large high-detail 3D center focus.
+SECTION 2 (TEXT CONTENT — FLAT 2D FRONTAL CARD)
+- Slide Header Badge: "POIN ${idx + 1} DARI ${cfg.blocks.length}"
+- Headline: "${b.title}"
+- Body Explanation: "${b.desc}"
+SECTION 3 (NAVIGATION FOOTER)
+- Visual Navigation: Small consistent swipe arrow icon at bottom-right corner (Page ${pageNum}/${totalSlides}).
+
+AI OUTPUT COMPLIANCE RULES:
+- Maintain 100% identical art style, lighting, and color palette with Slide 1.
+> **FORBIDDEN WORDS:** ${forbiddenSlide}${cfg.mjSuffix}`
+        });
+      });
+
+      // Last Slide: Summary & CTA
+      slides.push({
+        label: `Slide ${totalSlides} (CTA Penutup)`,
+        content: `# MASTER PROMPT CAROUSEL : ${cfg.headline} — PAGE ${totalSlides}/${totalSlides} (SUMMARY & CALL TO ACTION)
+${commonSpecs}
+
+SECTION 1 (SUMMARY & TRUST VISUAL)
+- VISUAL CUE: High-converting summary card with 4 supporting value icons and brand trust emblem.
+SECTION 2 (TEXT CONTENT — FLAT 2D FRONTAL)
+- Summary Row: "${cfg.footerRow}"
+- Main Call to Action: "${cfg.ctaText}"
+SECTION 3 (NAVIGATION FOOTER)
+- Final Slide Rule: NO swipe arrow on the final slide.
+
+AI OUTPUT COMPLIANCE RULES:
+- Maintain 100% identical art style, lighting, and color palette with Slide 1.
+> **FORBIDDEN WORDS:** ${forbiddenSlide}${cfg.mjSuffix}`
+      });
+
+      currentSlideIndex = 0;
+      return slides;
+    }
+
+    function renderCarouselTabs() {
+      const bar = document.getElementById("carouselSlideTabsBar");
+      bar.classList.add("active");
+      bar.innerHTML = generatedSlidesArray.map((s, idx) =>
+        `<button class="slide-tab-btn ${idx === currentSlideIndex ? 'active' : ''}" onclick="selectCarouselSlide(${idx})">${s.label}</button>`
+      ).join("") + `<button class="slide-tab-btn" onclick="selectCarouselSlide(-1)">📑 Gabungkan Semua Slide</button>`;
+
+      if (currentSlideIndex === -1) {
+        document.getElementById("terminalOutputPre").textContent = generatedSlidesArray.map(s => s.content).join("\n\n========================================\n\n");
+      } else {
+        document.getElementById("terminalOutputPre").textContent = generatedSlidesArray[currentSlideIndex].content;
+      }
+    }
+
+    function selectCarouselSlide(idx) {
+      currentSlideIndex = idx;
+      renderCarouselTabs();
+    }
+
+    // =========================================================================
+    // 8. LIVE SPATIAL WIREFRAME UPDATER
+    // =========================================================================
+    function updateLiveWireframe(ratio, layoutObj, styleObj, colors, blockCount) {
+      const wfBox = document.getElementById("wireframeBox");
+      const dimMap = {
+        "4:5": [100, 125],
+        "9:16": [82, 145],
+        "1:1": [118, 118],
+        "16:9": [140, 80],
+        "2:3": [94, 140],
+        "3:4": [102, 136]
+      };
+      const [w, h] = dimMap[ratio] || [100, 125];
+      wfBox.style.width = w + "px";
+      wfBox.style.height = h + "px";
+
+      document.getElementById("wfHeaderZone").style.background = colors[1] || "#10b981";
+      document.getElementById("wfBodyZone").style.background = colors[2] || "#0284c7";
+      document.getElementById("wfFooterZone").style.background = colors[3] || "#d97706";
+      document.getElementById("wfBodyZone").textContent = `${layoutObj.code} • ${blockCount} BLOK`;
+
+      document.getElementById("metricLayoutVal").textContent = `${layoutObj.code} • ${layoutObj.name.split("(")[0].trim()}`;
+      document.getElementById("metricStyleVal").textContent = `${styleObj.code} • ${styleObj.name.split("/")[0].trim()}`;
+
+      const score = Math.min(100, 84 + blockCount * 4);
+      document.getElementById("densityScoreBadge").textContent = `Skor Kepadatan: ${score}% (Optimal)`;
+    }
+
+    // =========================================================================
+    // 9. CATALOG EXPLORER (25 LAYOUTS + 50 STYLES)
+    // =========================================================================
+    function renderCatalogCards() {
+      const query = (document.getElementById("catalogSearchInput").value || "").toLowerCase();
+      const filter = document.getElementById("catalogTypeFilter").value;
+      const container = document.getElementById("catalogGridContainer");
+
+      let cardsHtml = "";
+
+      if (filter === "ALL" || filter === "LAYOUT") {
+        LAYOUT_LIBRARY.forEach(l => {
+          const hay = `${l.code} ${l.name} ${l.desc} ${l.bestFor}`.toLowerCase();
+          if (query && !hay.includes(query)) return;
+          cardsHtml += `
+            <div class="catalog-card">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span class="catalog-code-badge">LAYOUT ${l.code}</span>
+                  <span class="catalog-cat-badge">Arsitektur Spasial</span>
+                </div>
+                <h3 style="font-size:14.5px; font-weight:700; margin-bottom:5px;">${l.name}</h3>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:6px;">${l.desc}</p>
+                <div style="font-size:11px; color:var(--accent-emerald);"><strong>Terbaik untuk:</strong> ${l.bestFor}</div>
+              </div>
+              <button class="btn-secondary-action" style="justify-content:center; width:100%;" onclick="applyLayoutFromCatalog('${l.code}')">📐 Gunakan Layout ${l.code} di Studio</button>
+            </div>
+          `;
+        });
+      }
+
+      if (filter !== "LAYOUT") {
+        ART_STYLE_LIBRARY.forEach(s => {
+          if (filter !== "ALL" && s.cat !== filter) return;
+          const hay = `${s.code} ${s.name} ${s.keywords} ${s.catName}`.toLowerCase();
+          if (query && !hay.includes(query)) return;
+          cardsHtml += `
+            <div class="catalog-card">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span class="catalog-code-badge">STYLE ${s.code}</span>
+                  <span class="catalog-cat-badge">${s.catName}</span>
+                </div>
+                <h3 style="font-size:14.5px; font-weight:700; margin-bottom:5px;">${s.name}</h3>
+                <p style="font-size:11.5px; font-family:var(--font-mono); color:var(--text-muted);">${s.keywords}</p>
+              </div>
+              <button class="btn-secondary-action" style="justify-content:center; width:100%;" onclick="applyStyleFromCatalog('${s.code}')">🎨 Gunakan Style ${s.code} di Studio</button>
+            </div>
+          `;
+        });
+      }
+
+      container.innerHTML = cardsHtml || `<div style="grid-column:1/-1; text-align:center; padding:32px; color:var(--text-muted);">Tidak ditemukan Layout/Style yang cocok dengan pencarian Anda.</div>`;
+    }
+
+    function applyLayoutFromCatalog(code) {
+      document.getElementById("layoutSelect").value = code;
+      switchTab("builder", document.querySelectorAll(".nav-tab")[0]);
+      generateMasterPrompt();
+      showToast(`Layout ${code} diterapkan ke Studio Builder!`);
+    }
+
+    function applyStyleFromCatalog(code) {
+      document.getElementById("styleCategoryFilter").value = "ALL";
+      populateArtStyleSelect(code);
+      switchTab("builder", document.querySelectorAll(".nav-tab")[0]);
+      generateMasterPrompt();
+      showToast(`Art Style ${code} diterapkan ke Studio Builder!`);
+    }
+
+    // =========================================================================
+    // 10. HISTORY & LOCALSTORAGE MANAGEMENT
+    // =========================================================================
+    const STORAGE_KEY = "mira_master_prompt_builder_pro_v3_history";
+
+    function getSavedHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCurrentToHistory() {
+      const history = getSavedHistory();
+      const item = {
+        id: "MPB-" + Date.now(),
+        timestamp: new Date().toLocaleString("id-ID"),
+        headline: document.getElementById("headlineInput").value || "Tanpa Judul",
+        layout: document.getElementById("layoutSelect").value,
+        style: document.getElementById("artStyleSelect").value,
+        ratio: document.getElementById("aspectRatioSelect").value,
+        promptText: document.getElementById("terminalOutputPre").textContent
+      };
+      history.unshift(item);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(0, 50)));
+      renderHistoryList();
+      showToast("Prompt berhasil disimpan ke Riwayat Lokal!");
+    }
+
+    function renderHistoryList() {
+      const history = getSavedHistory();
+      document.getElementById("historyCountBadge").textContent = history.length;
+      const container = document.getElementById("historyListContainer");
+
+      if (history.length === 0) {
+        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:36px; color:var(--text-muted);">Belum ada riwayat prompt yang disimpan. Klik tombol <strong>"💾 Simpan Riwayat"</strong> pada terminal output untuk menyimpan karya Anda.</div>`;
+        return;
+      }
+
+      container.innerHTML = history.map((h, idx) => `
+        <div class="catalog-card">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span class="catalog-code-badge">${h.layout} • ${h.style} • ${h.ratio}</span>
+              <span style="font-size:11px; color:var(--text-muted);">${h.timestamp}</span>
+            </div>
+            <h3 style="font-size:14px; font-weight:700; margin-bottom:6px;">${escapeHtml(h.headline)}</h3>
+            <pre style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); max-height:90px; overflow:hidden; white-space:pre-wrap;">${escapeHtml(h.promptText.slice(0, 220))}...</pre>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-secondary-action" style="flex:1; justify-content:center;" onclick="copyHistoryPrompt(${idx})">📋 Salin</button>
+            <button class="btn-remove-block" onclick="deleteHistoryItem(${idx})">Hapus</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function copyHistoryPrompt(idx) {
+      const history = getSavedHistory();
+      if (!history[idx]) return;
+      copyTextToClipboard(history[idx].promptText);
+      showToast("Prompt dari riwayat berhasil disalin!");
+    }
+
+    function deleteHistoryItem(idx) {
+      const history = getSavedHistory();
+      history.splice(idx, 1);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      renderHistoryList();
+    }
+
+    function clearAllHistory() {
+      localStorage.removeItem(STORAGE_KEY);
+      renderHistoryList();
+      showToast("Seluruh riwayat berhasil dibersihkan.");
+    }
+
+    function exportHistoryJson() {
+      const history = getSavedHistory();
+      const blob = new Blob([JSON.stringify(history, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Riwayat_Master_Prompt_Builder_PRO_v3.json";
+      a.click();
+    }
+
+    // =========================================================================
+    // 11. UTILITIES: COPY, DOWNLOAD, TABS, THEME & TOAST
+    // =========================================================================
+    function copyTerminalOutput() {
+      const text = document.getElementById("terminalOutputPre").textContent;
+      copyTextToClipboard(text);
+      showToast("Master Prompt berhasil disalin ke Clipboard!");
+    }
+
+    function copyCompanionCommand() {
+      const text = document.getElementById("companionCommandText").textContent.replace(/^"|"$/g, "");
+      copyTextToClipboard(text);
+      showToast("Perintah pengantar berhasil disalin!");
+    }
+
+    function copyTextToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+    }
+
+    function downloadPromptFile() {
+      const text = document.getElementById("terminalOutputPre").textContent;
+      const isJson = document.getElementById("syntaxModeSelect").value === "json";
+      const ext = isJson ? "json" : "md";
+      const slug = (document.getElementById("headlineInput").value || "master_prompt")
+        .toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 35);
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Master_Prompt_${slug}.${ext}`;
+      a.click();
+      showToast(`File Master_Prompt_${slug}.${ext} berhasil diunduh!`);
+    }
+
+    function switchTab(tabId, btnEl) {
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("active"));
+      document.getElementById(`tab-${tabId}`).classList.add("active");
+      if (btnEl) btnEl.classList.add("active");
+    }
+
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const current = htmlEl.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      htmlEl.setAttribute("data-theme", next);
+      document.getElementById("themeToggleBtn").textContent = next === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode";
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toastNotification");
+      document.getElementById("toastMessageText").textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>
